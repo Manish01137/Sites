@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BatKing — World's Premium Prediction Exchange</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;600;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dark: #8B6914;
+    --black: #060608;
+    --dark: #0D0D12;
+    --card: #12121A;
+    --card2: #1A1A26;
+    --border: rgba(201,168,76,0.18);
+    --text: #E8E4D8;
+    --muted: #7A7870;
+    --green: #2ECC71;
+    --red: #E74C3C;
+    --blue: #3498DB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ========= NOISE OVERLAY ========= */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* ========= NAV ========= */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 72px;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .live-dot {
+    width: 7px; height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-outline {
+    padding: 9px 22px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .btn-gold {
+    padding: 9px 24px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border: none;
+    border-radius: 4px;
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+
+  /* ========= HERO ========= */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1600&q=80');
+    background-size: cover;
+    background-position: center 30%;
+    filter: brightness(0.25) saturate(0.6);
+  }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(6,6,8,0.98) 0%,
+      rgba(6,6,8,0.7) 50%,
+      rgba(6,6,8,0.92) 100%
+    );
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 120px 48px 80px;
+    max-width: 720px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-title span {
+    display: block;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .btn-hero {
+    padding: 14px 36px;
+    font-size: 0.88rem;
+    letter-spacing: 1.5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: all 0.25s;
+  }
+
+  .btn-hero-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border: none;
+    color: var(--black);
+    font-weight: 700;
+  }
+
+  .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,168,76,0.35); }
+
+  .btn-hero-secondary {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold);
+  }
+
+  .btn-hero-secondary:hover { background: rgba(201,168,76,0.07); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    display: flex;
+    gap: 48px;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  .stat-item { text-align: right; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========= TICKER ========= */
+  .ticker {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    overflow: hidden;
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ticker-label {
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0 18px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .ticker-track {
+    display: flex;
+    gap: 60px;
+    animation: ticker 30s linear infinite;
+    padding-left: 40px;
+    white-space: nowrap;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  .ticker-item .odds-up { color: var(--green); font-weight: 600; }
+  .ticker-item .odds-down { color: var(--red); font-weight: 600; }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ========= SECTION COMMON ========= */
+  section { padding: 80px 48px; }
+
+  .section-tag {
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 0.92rem;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  /* ========= LIVE MATCHES ========= */
+  .matches-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .match-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .match-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+  }
+
+  .match-card-header {
+    padding: 14px 18px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .match-sport {
+    font-size: 0.66rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .match-live-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(46,204,113,0.12);
+    border: 1px solid rgba(46,204,113,0.3);
+    border-radius: 2px;
+    padding: 3px 8px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .match-card-body { padding: 18px; }
+
+  .match-teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .team img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+  }
+
+  .team-name {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  .team-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+  }
+
+  .vs-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    padding: 0 12px;
+  }
+
+  .vs-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .match-time {
+    font-size: 0.66rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .match-odds {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+
+  .odd-btn {
+    background: var(--card2);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 9px 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .odd-btn:hover {
+    background: rgba(201,168,76,0.12);
+    border-color: var(--gold);
+  }
+
+  .odd-btn:first-child:hover { background: rgba(46,204,113,0.12); border-color: var(--green); }
+  .odd-btn:last-child:hover { background: rgba(231,76,60,0.12); border-color: var(--red); }
+
+  .odd-label { font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .odd-value { font-weight: 600; font-size: 0.88rem; margin-top: 2px; color: var(--text); }
+
+  /* ========= FEATURED SPORT SECTION ========= */
+  .featured {
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .featured::before {
+    content: '';
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.05), transparent 70%);
+    pointer-events: none;
+  }
+
+  .featured-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .featured-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .featured-image img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.7) brightness(0.85);
+    transition: all 0.4s;
+  }
+
+  .featured-image:hover img { filter: saturate(1) brightness(0.95); }
+
+  .featured-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6,6,8,0.8), transparent 60%);
+  }
+
+  .featured-image-label {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: white;
+  }
+
+  .sport-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .sport-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .sport-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.04);
+  }
+
+  .sport-icon {
+    width: 40px; height: 40px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .sport-info-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .sport-info-count {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .sport-arrow {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+  }
+
+  .sport-card:hover .sport-arrow { transform: translateX(3px); color: var(--gold); }
+
+  /* ========= PROMO BANNER ========= */
+  .promo-strip {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .promo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: var(--black);
+  }
+
+  .promo-sub { font-size: 0.8rem; color: rgba(0,0,0,0.6); margin-top: 2px; }
+
+  .promo-btn {
+    background: var(--black);
+    color: var(--gold);
+    border: none;
+    padding: 12px 28px;
+    border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .promo-btn:hover { background: #111; transform: scale(1.02); }
+
+  /* ========= HOW IT WORKS ========= */
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .step {
+    background: var(--card);
+    padding: 36px 28px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .step:hover { background: var(--card2); }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(201,168,76,0.1);
+    line-height: 1;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    letter-spacing: 2px;
+  }
+
+  .step-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .step-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ========= TESTIMONIALS ========= */
+  .testimonials { background: var(--dark); }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .testi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    position: relative;
+  }
+
+  .testi-quote {
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 12px;
+    opacity: 0.4;
+  }
+
+  .testi-text {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testi-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+  }
+
+  .testi-name { font-weight: 500; font-size: 0.84rem; }
+  .testi-meta { font-size: 0.7rem; color: var(--muted); }
+
+  .stars {
+    color: var(--gold);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  /* ========= CASINO SECTION ========= */
+  .casino-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .casino-card {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 3/4;
+  }
+
+  .casino-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+    filter: saturate(0.6) brightness(0.75);
+  }
+
+  .casino-card:hover img { transform: scale(1.05); filter: saturate(1) brightness(0.85); }
+
+  .casino-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6,6,8,0.9) 0%, transparent 55%);
+  }
+
+  .casino-card-info {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .casino-name {
+    font-weight: 500;
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+  }
+
+  .casino-meta {
+    font-size: 0.66rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .casino-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  /* ========= APP DOWNLOAD ========= */
+  .app-section {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .app-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .app-mockup {
+    position: relative;
+    text-align: center;
+  }
+
+  .app-mockup img {
+    width: 280px;
+    border-radius: 24px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.2);
+    filter: brightness(0.9);
+  }
+
+  .app-glow {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 60px;
+    background: var(--gold);
+    filter: blur(60px);
+    opacity: 0.15;
+  }
+
+  .download-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .dl-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .dl-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+
+  .dl-icon { font-size: 1.4rem; }
+  .dl-text-small { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .dl-text-big { font-size: 0.9rem; font-weight: 500; }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .feature-item::before {
+    content: '✓';
+    width: 22px;
+    height: 22px;
+    background: rgba(46,204,113,0.12);
+    border: 1px solid rgba(46,204,113,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    color: var(--green);
+    flex-shrink: 0;
+  }
+
+  /* ========= PAYMENT ========= */
+  .payments-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .payment-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 22px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .payment-item:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ========= FOOTER ========= */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 60px 48px 30px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-top: 14px;
+    max-width: 280px;
+  }
+
+  .footer-col-title {
+    font-size: 0.7rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-bottom p {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 10px;
+  }
+
+  .social-btn {
+    width: 34px;
+    height: 34px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: var(--muted);
+  }
+
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .age-badge {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* ========= FLOATING BET SLIP ========= */
+  .bet-slip {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 500;
+  }
+
+  .bet-slip-toggle {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border: none;
+    border-radius: 50px;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 1px;
+    color: var(--black);
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(201,168,76,0.4);
+    transition: all 0.2s;
+  }
+
+  .bet-slip-toggle:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(201,168,76,0.5); }
+
+  .bet-count {
+    background: var(--black);
+    color: var(--gold);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+  }
+
+  /* ========= RESPONSIVE ========= */
+  @media (max-width: 1024px) {
+    .matches-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-inner { grid-template-columns: 1fr; }
+    .how-steps { grid-template-columns: repeat(2, 1fr); }
+    .casino-grid { grid-template-columns: repeat(3, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+    .hero-content { padding: 100px 20px 60px; }
+    .hero-stats { right: 20px; bottom: 30px; gap: 24px; }
+    .matches-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .casino-grid { grid-template-columns: repeat(2, 1fr); }
+    .app-inner { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .promo-strip { flex-direction: column; text-align: center; }
+    .how-steps { grid-template-columns: 1fr; }
+  }
+
+  /* ========= SCROLL REVEAL ========= */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ========= ODDS FLASH ========= */
+  @keyframes oddFlash {
+    0% { background: rgba(46,204,113,0.3); }
+    100% { background: transparent; }
+  }
+
+  .flash-green { animation: oddFlash 0.6s ease; }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">🏏</div>
+    BatKing
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Cricket</a></li>
+    <li><a href="#">Football</a></li>
+    <li><a href="#">Exchange</a></li>
+    <li><a href="#">Casino</a></li>
+    <li><a href="#">Promotions</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-live">
+      <div class="live-dot"></div>
+      Live Now
+    </div>
+    <button class="btn-outline">Sign In</button>
+    <button class="btn-gold">Join Free</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">⚡ India's #1 Prediction Exchange</div>
+    <h1 class="hero-title">
+      Play The
+      <span>Odds.</span>
+      Own The
+      <span>Game.</span>
+    </h1>
+    <p class="hero-sub">Back or lay any outcome. Cricket, Football, Tennis & 20+ sports with real-time odds set by the market — not a bookmaker.</p>
+    <div class="hero-ctas">
+      <button class="btn-hero btn-hero-primary">Start Betting Free →</button>
+      <button class="btn-hero btn-hero-secondary">Watch Demo</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">2.4M+</div>
+      <div class="stat-label">Active Users</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">₹850Cr</div>
+      <div class="stat-label">Paid Out</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0.5%</div>
+      <div class="stat-label">Commission</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-label">🔴 Live Odds</div>
+  <div class="ticker-track" id="tickerTrack">
+    <div class="ticker-item">🏏 IND vs AUS — Over 42 | <span class="odds-up">2.18 ↑</span></div>
+    <div class="ticker-item">⚽ Arsenal vs Chelsea | <span class="odds-up">1.92 ↑</span></div>
+    <div class="ticker-item">🏏 RCB vs MI — Top Bat | <span class="odds-down">3.45 ↓</span></div>
+    <div class="ticker-item">🎾 Alcaraz vs Djokovic | <span class="odds-up">2.05 ↑</span></div>
+    <div class="ticker-item">🏏 SRH vs CSK — LIVE | <span class="odds-up">1.75 ↑</span></div>
+    <div class="ticker-item">⚽ Liverpool vs Man City | <span class="odds-down">2.30 ↓</span></div>
+    <div class="ticker-item">🏏 KKR vs DC — Match Winner | <span class="odds-up">1.88 ↑</span></div>
+    <div class="ticker-item">🏀 Lakers vs Celtics | <span class="odds-down">1.55 ↓</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item">🏏 IND vs AUS — Over 42 | <span class="odds-up">2.18 ↑</span></div>
+    <div class="ticker-item">⚽ Arsenal vs Chelsea | <span class="odds-up">1.92 ↑</span></div>
+    <div class="ticker-item">🏏 RCB vs MI — Top Bat | <span class="odds-down">3.45 ↓</span></div>
+    <div class="ticker-item">🎾 Alcaraz vs Djokovic | <span class="odds-up">2.05 ↑</span></div>
+    <div class="ticker-item">🏏 SRH vs CSK — LIVE | <span class="odds-up">1.75 ↑</span></div>
+    <div class="ticker-item">⚽ Liverpool vs Man City | <span class="odds-down">2.30 ↓</span></div>
+    <div class="ticker-item">🏏 KKR vs DC — Match Winner | <span class="odds-up">1.88 ↑</span></div>
+    <div class="ticker-item">🏀 Lakers vs Celtics | <span class="odds-down">1.55 ↓</span></div>
+  </div>
+</div>
+
+<!-- LIVE MATCHES -->
+<section>
+  <div class="section-tag">Live Markets</div>
+  <h2 class="section-title">PLACE YOUR BET</h2>
+  <p class="section-sub">Real-time peer-to-peer odds. Better prices than any bookmaker, guaranteed.</p>
+
+  <div class="matches-grid reveal">
+
+    <!-- Match 1 -->
+    <div class="match-card">
+      <div class="match-card-header">
+        <span class="match-sport">🏏 IPL 2026 • T20</span>
+        <div class="match-live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="match-card-body">
+        <div class="match-teams">
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/08/Mumbai_Indians_Logo.svg/200px-Mumbai_Indians_Logo.svg.png" alt="MI" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=MI'">
+            <div class="team-name">Mumbai Indians</div>
+            <div class="team-score">142/4</div>
+          </div>
+          <div class="vs-divider">
+            <div class="vs-text">VS</div>
+            <div class="match-time">Ov 16.2</div>
+          </div>
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Royal_Challengers_Bangalore.svg/200px-Royal_Challengers_Bangalore.svg.png" alt="RCB" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=RCB'">
+            <div class="team-name">Royal Challengers</div>
+            <div class="team-score">—</div>
+          </div>
+        </div>
+        <div class="match-odds">
+          <div class="odd-btn">
+            <div class="odd-label">Back MI</div>
+            <div class="odd-value">1.82</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Draw</div>
+            <div class="odd-value">—</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Back RCB</div>
+            <div class="odd-value">2.14</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match 2 -->
+    <div class="match-card">
+      <div class="match-card-header">
+        <span class="match-sport">⚽ Premier League</span>
+        <div class="match-live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="match-card-body">
+        <div class="match-teams">
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/150px-Arsenal_FC.svg.png" alt="Arsenal" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=ARS'">
+            <div class="team-name">Arsenal</div>
+            <div class="team-score">1</div>
+          </div>
+          <div class="vs-divider">
+            <div class="vs-text">VS</div>
+            <div class="match-time">72′</div>
+          </div>
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/150px-Chelsea_FC.svg.png" alt="Chelsea" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=CHE'">
+            <div class="team-name">Chelsea</div>
+            <div class="team-score">1</div>
+          </div>
+        </div>
+        <div class="match-odds">
+          <div class="odd-btn">
+            <div class="odd-label">Arsenal</div>
+            <div class="odd-value">2.40</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Draw</div>
+            <div class="odd-value">3.20</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Chelsea</div>
+            <div class="odd-value">3.10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match 3 -->
+    <div class="match-card">
+      <div class="match-card-header">
+        <span class="match-sport">🎾 ATP Masters</span>
+        <span style="font-size:0.66rem;color:var(--muted);letter-spacing:1px;">Today 18:30</span>
+      </div>
+      <div class="match-card-body">
+        <div class="match-teams">
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Carlos_Alcaraz_2022_Wimbledon_%28cropped%29.jpg/120px-Carlos_Alcaraz_2022_Wimbledon_%28cropped%29.jpg" alt="Alcaraz" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=ALC'" style="object-position: top">
+            <div class="team-name">C. Alcaraz</div>
+            <div class="team-score">—</div>
+          </div>
+          <div class="vs-divider">
+            <div class="vs-text">VS</div>
+            <div class="match-time">Upcoming</div>
+          </div>
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Novak_Djokovic_2022_Wimbledon_%28cropped%29.jpg/120px-Novak_Djokovic_2022_Wimbledon_%28cropped%29.jpg" alt="Djokovic" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=DJK'" style="object-position: top">
+            <div class="team-name">N. Djokovic</div>
+            <div class="team-score">—</div>
+          </div>
+        </div>
+        <div class="match-odds">
+          <div class="odd-btn">
+            <div class="odd-label">Alcaraz</div>
+            <div class="odd-value">1.95</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Sets 2-0</div>
+            <div class="odd-value">2.80</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Djokovic</div>
+            <div class="odd-value">2.05</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match 4 -->
+    <div class="match-card">
+      <div class="match-card-header">
+        <span class="match-sport">🏏 Test Series</span>
+        <div class="match-live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="match-card-body">
+        <div class="match-teams">
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/Cricket_India_Crest.svg/150px-Cricket_India_Crest.svg.png" alt="IND" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=IND'">
+            <div class="team-name">India</div>
+            <div class="team-score">312/5</div>
+          </div>
+          <div class="vs-divider">
+            <div class="vs-text">VS</div>
+            <div class="match-time">Day 2</div>
+          </div>
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Cricket_Australia_%28logo%29.svg/150px-Cricket_Australia_%28logo%29.svg.png" alt="AUS" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=AUS'">
+            <div class="team-name">Australia</div>
+            <div class="team-score">287/8</div>
+          </div>
+        </div>
+        <div class="match-odds">
+          <div class="odd-btn">
+            <div class="odd-label">India</div>
+            <div class="odd-value">1.65</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Draw</div>
+            <div class="odd-value">4.20</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Australia</div>
+            <div class="odd-value">5.50</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match 5 -->
+    <div class="match-card">
+      <div class="match-card-header">
+        <span class="match-sport">🏀 NBA Playoffs</span>
+        <span style="font-size:0.66rem;color:var(--muted);letter-spacing:1px;">Tomorrow</span>
+      </div>
+      <div class="match-card-body">
+        <div class="match-teams">
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/Los_Angeles_Lakers_logo.svg/150px-Los_Angeles_Lakers_logo.svg.png" alt="LAL" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=LAL'">
+            <div class="team-name">LA Lakers</div>
+            <div class="team-score">—</div>
+          </div>
+          <div class="vs-divider">
+            <div class="vs-text">VS</div>
+            <div class="match-time">19:00</div>
+          </div>
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boston_Celtics.svg/150px-Boston_Celtics.svg.png" alt="BOS" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=BOS'">
+            <div class="team-name">Boston Celtics</div>
+            <div class="team-score">—</div>
+          </div>
+        </div>
+        <div class="match-odds">
+          <div class="odd-btn">
+            <div class="odd-label">Lakers</div>
+            <div class="odd-value">2.75</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">+5.5</div>
+            <div class="odd-value">1.90</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">Celtics</div>
+            <div class="odd-value">1.55</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match 6 -->
+    <div class="match-card">
+      <div class="match-card-header">
+        <span class="match-sport">🏏 IPL 2026 • T20</span>
+        <div class="match-live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="match-card-body">
+        <div class="match-teams">
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/Kolkata_Knight_Riders_Logo.svg/150px-Kolkata_Knight_Riders_Logo.svg.png" alt="KKR" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=KKR'">
+            <div class="team-name">Kolkata KR</div>
+            <div class="team-score">88/2</div>
+          </div>
+          <div class="vs-divider">
+            <div class="vs-text">VS</div>
+            <div class="match-time">Ov 11.3</div>
+          </div>
+          <div class="team">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Delhi_Capitals_Logo.svg/150px-Delhi_Capitals_Logo.svg.png" alt="DC" onerror="this.src='https://placehold.co/44x44/1a1a26/gold?text=DC'">
+            <div class="team-name">Delhi Capitals</div>
+            <div class="team-score">—</div>
+          </div>
+        </div>
+        <div class="match-odds">
+          <div class="odd-btn">
+            <div class="odd-label">KKR</div>
+            <div class="odd-value">1.48</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">200+ Total</div>
+            <div class="odd-value">2.10</div>
+          </div>
+          <div class="odd-btn">
+            <div class="odd-label">DC</div>
+            <div class="odd-value">2.98</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROMO STRIP -->
+<div class="promo-strip reveal">
+  <div>
+    <div class="promo-text">🎁 100% WELCOME BONUS — UP TO ₹10,000</div>
+    <div class="promo-sub">New users only • Min deposit ₹500 • T&Cs apply</div>
+  </div>
+  <button class="promo-btn">Claim Now →</button>
+</div>
+
+<!-- SPORTS FEATURED -->
+<section class="featured">
+  <div class="featured-inner reveal">
+    <div>
+      <div class="section-tag">All Sports</div>
+      <h2 class="section-title">EVERY SPORT.<br>EVERY MARKET.</h2>
+      <p class="section-sub">From IPL sixes to Premier League corners — bet on any market you can imagine, with odds controlled by real traders.</p>
+      <div class="sport-cards">
+        <div class="sport-card">
+          <div class="sport-icon">🏏</div>
+          <div>
+            <div class="sport-info-name">Cricket</div>
+            <div class="sport-info-count">142 live markets</div>
+          </div>
+          <div class="sport-arrow">→</div>
+        </div>
+        <div class="sport-card">
+          <div class="sport-icon">⚽</div>
+          <div>
+            <div class="sport-info-name">Football</div>
+            <div class="sport-info-count">89 live markets</div>
+          </div>
+          <div class="sport-arrow">→</div>
+        </div>
+        <div class="sport-card">
+          <div class="sport-icon">🎾</div>
+          <div>
+            <div class="sport-info-name">Tennis</div>
+            <div class="sport-info-count">34 live markets</div>
+          </div>
+          <div class="sport-arrow">→</div>
+        </div>
+        <div class="sport-card">
+          <div class="sport-icon">🏀</div>
+          <div>
+            <div class="sport-info-name">Basketball</div>
+            <div class="sport-info-count">28 live markets</div>
+          </div>
+          <div class="sport-arrow">→</div>
+        </div>
+        <div class="sport-card">
+          <div class="sport-icon">🏇</div>
+          <div>
+            <div class="sport-info-name">Horse Racing</div>
+            <div class="sport-info-count">67 live markets</div>
+          </div>
+          <div class="sport-arrow">→</div>
+        </div>
+        <div class="sport-card">
+          <div class="sport-icon">🎮</div>
+          <div>
+            <div class="sport-info-name">Esports</div>
+            <div class="sport-info-count">19 live markets</div>
+          </div>
+          <div class="sport-arrow">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="featured-image">
+      <img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800&q=80" alt="Cricket Stadium">
+      <div class="featured-image-overlay"></div>
+      <div class="featured-image-label">LIVE ACTION</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div style="text-align:center;margin-bottom:8px">
+    <div class="section-tag" style="justify-content:center">How It Works</div>
+    <h2 class="section-title" style="text-align:center">START IN 4 STEPS</h2>
+  </div>
+  <div class="how-steps reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">👤</div>
+      <div class="step-title">Create Account</div>
+      <p class="step-desc">Sign up in 60 seconds. Just your phone number and you're in. No lengthy KYC to start.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">💳</div>
+      <div class="step-title">Add Funds</div>
+      <p class="step-desc">Instant deposits via UPI, PhonePe, Paytm, GPay or Net Banking. Min ₹100 to get started.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">🎯</div>
+      <div class="step-title">Pick Your Market</div>
+      <p class="step-desc">Back or lay any outcome across cricket, football, tennis and 20+ other sports in real-time.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-icon">💸</div>
+      <div class="step-title">Instant Withdrawal</div>
+      <p class="step-desc">Winnings hit your account in under 2 minutes. No delays, no questions asked on verified accounts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASINO -->
+<section style="background: var(--dark); border-top: 1px solid var(--border);">
+  <div class="section-tag">Live Casino</div>
+  <h2 class="section-title">CASINO ROYALE</h2>
+  <p class="section-sub">Premium live tables powered by Evolution, Pragmatic & Ezugi. Play 24/7 with real dealers.</p>
+  <div class="casino-grid reveal">
+    <div class="casino-card">
+      <img src="https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=400&q=80" alt="Roulette">
+      <div class="casino-card-overlay"></div>
+      <div class="casino-badge">Popular</div>
+      <div class="casino-card-info">
+        <div class="casino-name">Live Roulette</div>
+        <div class="casino-meta">342 Players Online</div>
+      </div>
+    </div>
+    <div class="casino-card">
+      <img src="https://images.unsplash.com/photo-1587620962725-abab19836100?w=400&q=80" alt="Baccarat">
+      <div class="casino-card-overlay"></div>
+      <div class="casino-badge">New</div>
+      <div class="casino-card-info">
+        <div class="casino-name">Baccarat Squeeze</div>
+        <div class="casino-meta">218 Players Online</div>
+      </div>
+    </div>
+    <div class="casino-card">
+      <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=400&q=80" alt="Blackjack">
+      <div class="casino-card-overlay"></div>
+      <div class="casino-card-info">
+        <div class="casino-name">Speed Blackjack</div>
+        <div class="casino-meta">89 Players Online</div>
+      </div>
+    </div>
+    <div class="casino-card">
+      <img src="https://images.unsplash.com/photo-1534432182912-63863115e106?w=400&q=80" alt="Poker">
+      <div class="casino-card-overlay"></div>
+      <div class="casino-badge">Hot</div>
+      <div class="casino-card-info">
+        <div class="casino-name">Teen Patti Live</div>
+        <div class="casino-meta">1,240 Players Online</div>
+      </div>
+    </div>
+    <div class="casino-card">
+      <img src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=400&q=80" alt="Slots">
+      <div class="casino-card-overlay"></div>
+      <div class="casino-card-info">
+        <div class="casino-name">Dragon Tiger</div>
+        <div class="casino-meta">567 Players Online</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-tag">Testimonials</div>
+  <h2 class="section-title">PLAYERS TRUST US</h2>
+  <div class="testi-grid reveal">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Best exchange in India, period. The live cricket odds are insane and withdrawals hit my account within minutes every single time.</p>
+      <div class="testi-author">
+        <img src="https://i.pravatar.cc/80?img=3" class="testi-avatar" alt="Rahul">
+        <div>
+          <div class="testi-name">Rahul Sharma</div>
+          <div class="testi-meta">Mumbai • Member since 2024</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">0.5% commission changed everything for me. I was losing 5–8% on every trade on other platforms. BatKing is genuinely different.</p>
+      <div class="testi-author">
+        <img src="https://i.pravatar.cc/80?img=12" class="testi-avatar" alt="Priya">
+        <div>
+          <div class="testi-name">Priya Patel</div>
+          <div class="testi-meta">Ahmedabad • Member since 2023</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★☆</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">IPL markets are incredible — so many options beyond just match winner. Session totals, wicket bets, over-by-over. Love it.</p>
+      <div class="testi-author">
+        <img src="https://i.pravatar.cc/80?img=33" class="testi-avatar" alt="Aakash">
+        <div>
+          <div class="testi-name">Aakash Verma</div>
+          <div class="testi-meta">Delhi • Member since 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP DOWNLOAD -->
+<section class="app-section">
+  <div class="app-inner reveal">
+    <div>
+      <div class="section-tag">Mobile App</div>
+      <h2 class="section-title">BET ON THE GO.<br>ALWAYS IN PLAY.</h2>
+      <p class="section-sub">Our app is built for speed. Sub-second odds updates during live matches. Never miss a moment.</p>
+      <div class="feature-list">
+        <div class="feature-item">Live score & odds in a single screen</div>
+        <div class="feature-item">One-tap bet placement</div>
+        <div class="feature-item">Instant UPI deposits & withdrawals</div>
+        <div class="feature-item">Push notifications for match alerts</div>
+        <div class="feature-item">Full casino access on mobile</div>
+      </div>
+      <div class="download-btns">
+        <a href="#" class="dl-btn">
+          <div class="dl-icon">📱</div>
+          <div>
+            <div class="dl-text-small">Download on</div>
+            <div class="dl-text-big">App Store</div>
+          </div>
+        </a>
+        <a href="#" class="dl-btn">
+          <div class="dl-icon">🤖</div>
+          <div>
+            <div class="dl-text-small">Get it on</div>
+            <div class="dl-text-big">Google Play</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="app-mockup">
+      <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&q=80" alt="App Screenshot">
+      <div class="app-glow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENTS -->
+<section style="text-align:center; border-top: 1px solid var(--border);">
+  <div class="section-tag" style="justify-content:center">Payment Methods</div>
+  <h2 class="section-title">INSTANT DEPOSITS &<br>WITHDRAWALS</h2>
+  <p class="section-sub" style="margin:0 auto; text-align:center;">We support every major Indian payment method for zero-friction transactions.</p>
+  <div class="payments-row reveal">
+    <div class="payment-item">📱 UPI</div>
+    <div class="payment-item">☎ PhonePe</div>
+    <div class="payment-item">🅶 Google Pay</div>
+    <div class="payment-item">💛 Paytm</div>
+    <div class="payment-item">🏦 Net Banking</div>
+    <div class="payment-item">💳 Debit Card</div>
+    <div class="payment-item">🔶 IMPS</div>
+    <div class="payment-item">₿ Crypto</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="text-decoration:none;">
+        <div class="logo-icon">🏏</div>
+        BatKing
+      </a>
+      <p>India's most trusted peer-to-peer prediction exchange. Lowest commission. Fastest withdrawals. Real-time markets on every sport.</p>
+      <div style="margin-top:20px; font-size:0.72rem; color: var(--muted); line-height:1.8;">
+        ⚠️ Gambling can be addictive. Play responsibly.<br>
+        18+ only. T&Cs apply.
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Sports</div>
+      <ul class="footer-links">
+        <li><a href="#">Cricket</a></li>
+        <li><a href="#">Football</a></li>
+        <li><a href="#">Tennis</a></li>
+        <li><a href="#">Basketball</a></li>
+        <li><a href="#">Horse Racing</a></li>
+        <li><a href="#">Esports</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Products</div>
+      <ul class="footer-links">
+        <li><a href="#">Exchange Betting</a></li>
+        <li><a href="#">Live Casino</a></li>
+        <li><a href="#">Sports Book</a></li>
+        <li><a href="#">Promotions</a></li>
+        <li><a href="#">VIP Club</a></li>
+        <li><a href="#">Affiliate Program</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">Responsible Gaming</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 BatKing Exchange. All rights reserved. Operated under license.</p>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="age-badge">18+ Only</div>
+      <div class="social-links">
+        <a href="#" class="social-btn">𝕏</a>
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">▶</a>
+        <a href="#" class="social-btn">📸</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BET SLIP -->
+<div class="bet-slip">
+  <button class="bet-slip-toggle" onclick="this.querySelector('.bet-count').textContent = Math.min(9, parseInt(this.querySelector('.bet-count').textContent)+1)">
+    🎯 Bet Slip
+    <div class="bet-count">0</div>
+  </button>
+</div>
+
+<script>
+  // Scroll Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Live odds randomizer
+  function randomizeOdds() {
+    const oddValues = document.querySelectorAll('.odd-value');
+    oddValues.forEach(el => {
+      if (el.textContent === '—') return;
+      const current = parseFloat(el.textContent);
+      if (isNaN(current)) return;
+      const change = (Math.random() - 0.5) * 0.06;
+      const newVal = Math.max(1.01, current + change).toFixed(2);
+      el.textContent = newVal;
+      el.parentElement.classList.add('flash-green');
+      setTimeout(() => el.parentElement.classList.remove('flash-green'), 600);
+    });
+  }
+
+  setInterval(randomizeOdds, 2200);
+
+  // Odd button click handler
+  document.querySelectorAll('.odd-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const val = this.querySelector('.odd-value').textContent;
+      if (val === '—') return;
+      const label = this.querySelector('.odd-label').textContent;
+      const countEl = document.querySelector('.bet-count');
+      const count = parseInt(countEl.textContent);
+      if (count < 9) countEl.textContent = count + 1;
+      this.style.transform = 'scale(0.95)';
+      setTimeout(() => this.style.transform = '', 150);
+    });
+  });
+
+  // Score update simulation
+  setInterval(() => {
+    const scores = document.querySelectorAll('.team-score');
+    scores.forEach(s => {
+      if (s.textContent.includes('/') && Math.random() > 0.85) {
+        const parts = s.textContent.split('/');
+        const runs = parseInt(parts[0]);
+        s.textContent = (runs + (Math.random() > 0.5 ? 1 : 0)) + '/' + parts[1];
+      }
+    });
+  }, 3000);
+</script>
+</body>
+</html>
