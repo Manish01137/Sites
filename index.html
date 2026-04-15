@@ -83,21 +83,115 @@
 
   .nav-links {
     display: flex;
-    gap: 36px;
+    gap: 4px;
     list-style: none;
+    align-items: center;
+    height: 100%;
   }
 
-  .nav-links a {
+  .nav-links > li {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links > li > a {
     color: var(--muted);
     text-decoration: none;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 400;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     transition: color 0.2s;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 100%;
   }
 
-  .nav-links a:hover { color: var(--gold); }
+  .nav-links > li > a:hover,
+  .nav-links > li:hover > a { color: var(--gold); }
+
+  .dropdown-arrow {
+    font-size: 0.55rem;
+    transition: transform 0.2s;
+  }
+
+  .nav-links > li:hover .dropdown-arrow { transform: rotate(180deg); }
+
+  /* ========= DROPDOWN MENU ========= */
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 260px;
+    background: rgba(13,13,18,0.98);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: all 0.25s ease;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    z-index: 1001;
+  }
+
+  .nav-links > li:hover > .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    transition: all 0.15s;
+  }
+
+  .dropdown a:hover {
+    color: var(--gold);
+    background: rgba(201,168,76,0.06);
+    padding-left: 24px;
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 6px 16px;
+  }
+
+  .dropdown-label {
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 10px 20px 4px;
+    opacity: 0.6;
+  }
+
+  .dropdown-icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
 
   .nav-live {
     display: flex;
@@ -125,7 +219,44 @@
   .nav-right {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
+  }
+
+  .btn-whatsapp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: #25D366;
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 4px 18px rgba(37,211,102,0.35);
+    animation: whatsappGlow 2s ease-in-out infinite;
+  }
+
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(37,211,102,0.5);
+    background: #22c35e;
+  }
+
+  @keyframes whatsappGlow {
+    0%, 100% { box-shadow: 0 4px 18px rgba(37,211,102,0.35); }
+    50% { box-shadow: 0 4px 24px rgba(37,211,102,0.55); }
+  }
+
+  .btn-whatsapp-icon {
+    font-size: 1.1rem;
+    line-height: 1;
   }
 
   .btn-outline {
@@ -160,6 +291,113 @@
   }
 
   .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+
+  /* ========= HAMBURGER ========= */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+    background: none;
+    border: none;
+    z-index: 1002;
+  }
+
+  .hamburger span {
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  /* ========= MOBILE NAV OVERLAY ========= */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(6,6,8,0.98);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .mobile-nav.open { display: block; }
+
+  .mobile-nav-section {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+  }
+
+  .mobile-nav-section:last-child { border-bottom: none; }
+
+  .mobile-nav-title {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  .mobile-nav-title .chevron {
+    font-size: 0.6rem;
+    transition: transform 0.2s;
+  }
+
+  .mobile-nav-title.expanded .chevron { transform: rotate(180deg); }
+
+  .mobile-subnav {
+    display: none;
+    padding-left: 12px;
+  }
+
+  .mobile-subnav.open { display: block; }
+
+  .mobile-subnav a {
+    display: block;
+    padding: 8px 0;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.84rem;
+    transition: color 0.15s;
+  }
+
+  .mobile-subnav a:hover { color: var(--gold); }
+
+  .mobile-nav-cta {
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .mobile-nav-home {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .mobile-nav-home:hover { color: var(--gold); }
+
+  .mobile-nav-cta .btn-whatsapp {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+    font-size: 0.9rem;
+  }
 
   /* ========= HERO ========= */
   .hero {
@@ -1116,6 +1354,8 @@
 
   /* ========= RESPONSIVE ========= */
   @media (max-width: 1024px) {
+    .nav-links { gap: 0; }
+    .nav-links > li > a { font-size: 0.7rem; padding: 8px 10px; letter-spacing: 0.8px; }
     .matches-grid { grid-template-columns: repeat(2, 1fr); }
     .featured-inner { grid-template-columns: 1fr; }
     .how-steps { grid-template-columns: repeat(2, 1fr); }
@@ -1124,8 +1364,10 @@
   }
 
   @media (max-width: 768px) {
-    nav { padding: 0 20px; }
+    nav { padding: 0 16px; }
     .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .btn-whatsapp { padding: 8px 14px; font-size: 0.72rem; }
     section { padding: 60px 20px; }
     .hero-content { padding: 100px 20px 60px; }
     .hero-stats { right: 20px; bottom: 30px; gap: 24px; }
@@ -1168,22 +1410,131 @@
     <div class="logo-icon">🏏</div>
     BatKing
   </a>
+
   <ul class="nav-links">
-    <li><a href="#">Cricket</a></li>
-    <li><a href="#">Football</a></li>
-    <li><a href="#">Exchange</a></li>
-    <li><a href="#">Casino</a></li>
-    <li><a href="#">Promotions</a></li>
+    <li><a href="#">Home</a></li>
+
+    <!-- Betting Exchanges Dropdown -->
+    <li>
+      <a href="#">Betting Exchanges <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown">
+        <div class="dropdown-label">Popular IDs</div>
+        <a href="#"><div class="dropdown-icon">⭐</div> Fairbet ID</a>
+        <a href="#"><div class="dropdown-icon">🌍</div> World777 ID</a>
+        <a href="#"><div class="dropdown-icon">🌀</div> Sky Exchange ID</a>
+        <a href="#"><div class="dropdown-icon">🐅</div> TigerExch ID</a>
+        <a href="#"><div class="dropdown-icon">💎</div> DiamondExch ID</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-label">Compare</div>
+        <a href="#"><div class="dropdown-icon">⚖️</div> Fairbet vs World777</a>
+      </div>
+    </li>
+
+    <!-- Tournaments Dropdown -->
+    <li>
+      <a href="#">Tournaments <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown">
+        <a href="#"><div class="dropdown-icon">🏆</div> IPL 2026 Cricket ID</a>
+        <a href="#"><div class="dropdown-icon">👩</div> Women's T20 World Cup ID</a>
+        <a href="#"><div class="dropdown-icon">🏏</div> WPL Cricket ID</a>
+        <a href="#"><div class="dropdown-icon">🌙</div> PSL Cricket ID</a>
+      </div>
+    </li>
+
+    <!-- Match Center Dropdown -->
+    <li>
+      <a href="#">Match Center <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown">
+        <a href="#"><div class="dropdown-icon">🔮</div> Today's Match Predictions</a>
+        <a href="#"><div class="dropdown-icon">📡</div> Live Scores & Points Tables</a>
+        <a href="#"><div class="dropdown-icon">📊</div> Player Stats</a>
+      </div>
+    </li>
+
+    <!-- Offers & Proof Dropdown -->
+    <li>
+      <a href="#">Offers & Proof <span class="dropdown-arrow">▼</span></a>
+      <div class="dropdown">
+        <a href="#"><div class="dropdown-icon">🎁</div> Bonus Offers</a>
+        <a href="#"><div class="dropdown-icon">✅</div> Withdrawal Proofs</a>
+        <div class="dropdown-divider"></div>
+        <a href="#"><div class="dropdown-icon">🤝</div> Refer 5 Friends = ₹2000 Bonus</a>
+      </div>
+    </li>
   </ul>
+
   <div class="nav-right">
-    <div class="nav-live">
-      <div class="live-dot"></div>
-      Live Now
-    </div>
-    <button class="btn-outline">Sign In</button>
-    <button class="btn-gold">Join Free</button>
+    <a href="https://wa.me/" class="btn-whatsapp" target="_blank" rel="noopener">
+      <span class="btn-whatsapp-icon">🟢</span>
+      GET CRICKET ID
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-section">
+    <a href="#" class="mobile-nav-home">Home</a>
+  </div>
+
+  <div class="mobile-nav-section">
+    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
+      Betting Exchanges <span class="chevron">▼</span>
+    </div>
+    <div class="mobile-subnav">
+      <a href="#">Fairbet ID</a>
+      <a href="#">World777 ID</a>
+      <a href="#">Sky Exchange ID</a>
+      <a href="#">TigerExch ID</a>
+      <a href="#">DiamondExch ID</a>
+      <a href="#">Fairbet vs World777</a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-section">
+    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
+      Tournaments <span class="chevron">▼</span>
+    </div>
+    <div class="mobile-subnav">
+      <a href="#">IPL 2026 Cricket ID</a>
+      <a href="#">Women's T20 World Cup ID</a>
+      <a href="#">WPL Cricket ID</a>
+      <a href="#">PSL Cricket ID</a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-section">
+    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
+      Match Center <span class="chevron">▼</span>
+    </div>
+    <div class="mobile-subnav">
+      <a href="#">Today's Match Predictions</a>
+      <a href="#">Live Scores & Points Tables</a>
+      <a href="#">Player Stats</a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-section">
+    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
+      Offers & Proof <span class="chevron">▼</span>
+    </div>
+    <div class="mobile-subnav">
+      <a href="#">Bonus Offers</a>
+      <a href="#">Withdrawal Proofs</a>
+      <a href="#">Refer 5 Friends = ₹2000 Bonus</a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-cta">
+    <a href="https://wa.me/" class="btn-whatsapp" target="_blank" rel="noopener">
+      <span class="btn-whatsapp-icon">🟢</span>
+      GET CRICKET ID
+    </a>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1880,6 +2231,25 @@
       }
     });
   }, 3000);
+
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileNav.classList.toggle('open');
+    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+  });
+
+  // Close mobile nav on link click
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
 </script>
 </body>
 </html>
