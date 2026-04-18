@@ -3,1538 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BatKing — World's Premium Prediction Exchange</title>
+<title>BatKing — India's #1 Cricket ID Provider | Instant ID & 15% Bonus</title>
+<meta name="description" content="Get your Cricket ID in 2 minutes on WhatsApp. 15% welcome bonus — 3× better than DaddyAnna. Daily predictions, Dream11 tips & verified withdrawal proofs.">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;600;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold: #C9A84C;
-    --gold-light: #F0D080;
-    --gold-dark: #8B6914;
-    --black: #060608;
-    --dark: #0D0D12;
-    --card: #12121A;
-    --card2: #1A1A26;
-    --border: rgba(201,168,76,0.18);
-    --text: #E8E4D8;
-    --muted: #7A7870;
-    --green: #2ECC71;
-    --red: #E74C3C;
-    --blue: #3498DB;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: default;
-  }
-
-  /* ========= NOISE OVERLAY ========= */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.35;
-  }
-
-  /* ========= NAV ========= */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 48px;
-    height: 72px;
-    background: rgba(6,6,8,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo {
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    font-size: 1.6rem;
-    letter-spacing: 3px;
-    color: var(--gold);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 4px;
-    list-style: none;
-    align-items: center;
-    height: 100%;
-  }
-
-  .nav-links > li {
-    position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-
-  .nav-links > li > a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.78rem;
-    font-weight: 400;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    padding: 8px 14px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    height: 100%;
-  }
-
-  .nav-links > li > a:hover,
-  .nav-links > li:hover > a { color: var(--gold); }
-
-  .dropdown-arrow {
-    font-size: 0.55rem;
-    transition: transform 0.2s;
-  }
-
-  .nav-links > li:hover .dropdown-arrow { transform: rotate(180deg); }
-
-  /* ========= DROPDOWN MENU ========= */
-  .dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-width: 260px;
-    background: rgba(13,13,18,0.98);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(8px);
-    transition: all 0.25s ease;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    z-index: 1001;
-  }
-
-  .nav-links > li:hover > .dropdown {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .dropdown a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.8rem;
-    letter-spacing: 0.5px;
-    transition: all 0.15s;
-  }
-
-  .dropdown a:hover {
-    color: var(--gold);
-    background: rgba(201,168,76,0.06);
-    padding-left: 24px;
-  }
-
-  .dropdown-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 6px 16px;
-  }
-
-  .dropdown-label {
-    font-size: 0.62rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    padding: 10px 20px 4px;
-    opacity: 0.6;
-  }
-
-  .dropdown-icon {
-    width: 28px;
-    height: 28px;
-    background: rgba(201,168,76,0.08);
-    border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-  }
-
-  .nav-live {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--green);
-  }
-
-  .live-dot {
-    width: 7px; height: 7px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.4); }
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .btn-whatsapp {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 22px;
-    background: #25D366;
-    border: none;
-    border-radius: 50px;
-    color: #fff;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 0.78rem;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.25s;
-    text-decoration: none;
-    white-space: nowrap;
-    box-shadow: 0 4px 18px rgba(37,211,102,0.35);
-    animation: whatsappGlow 2s ease-in-out infinite;
-  }
-
-  .btn-whatsapp:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(37,211,102,0.5);
-    background: #22c35e;
-  }
-
-  @keyframes whatsappGlow {
-    0%, 100% { box-shadow: 0 4px 18px rgba(37,211,102,0.35); }
-    50% { box-shadow: 0 4px 24px rgba(37,211,102,0.55); }
-  }
-
-  .btn-whatsapp-icon {
-    font-size: 1.1rem;
-    line-height: 1;
-  }
-
-  .btn-outline {
-    padding: 9px 22px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    background: transparent;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-  }
-
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-  .btn-gold {
-    padding: 9px 24px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    border: none;
-    border-radius: 4px;
-    color: var(--black);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-  }
-
-  .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
-
-  /* ========= HAMBURGER ========= */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 8px;
-    background: none;
-    border: none;
-    z-index: 1002;
-  }
-
-  .hamburger span {
-    width: 22px;
-    height: 2px;
-    background: var(--text);
-    border-radius: 2px;
-    transition: all 0.3s;
-  }
-
-  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-  .hamburger.active span:nth-child(2) { opacity: 0; }
-  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-  /* ========= MOBILE NAV OVERLAY ========= */
-  .mobile-nav {
-    display: none;
-    position: fixed;
-    top: 72px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(6,6,8,0.98);
-    backdrop-filter: blur(20px);
-    z-index: 999;
-    overflow-y: auto;
-    padding: 20px;
-  }
-
-  .mobile-nav.open { display: block; }
-
-  .mobile-nav-section {
-    border-bottom: 1px solid var(--border);
-    padding: 14px 0;
-  }
-
-  .mobile-nav-section:last-child { border-bottom: none; }
-
-  .mobile-nav-title {
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    padding: 4px 0;
-  }
-
-  .mobile-nav-title .chevron {
-    font-size: 0.6rem;
-    transition: transform 0.2s;
-  }
-
-  .mobile-nav-title.expanded .chevron { transform: rotate(180deg); }
-
-  .mobile-subnav {
-    display: none;
-    padding-left: 12px;
-  }
-
-  .mobile-subnav.open { display: block; }
-
-  .mobile-subnav a {
-    display: block;
-    padding: 8px 0;
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.84rem;
-    transition: color 0.15s;
-  }
-
-  .mobile-subnav a:hover { color: var(--gold); }
-
-  .mobile-nav-cta {
-    padding: 20px 0;
-    text-align: center;
-  }
-
-  .mobile-nav-home {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-
-  .mobile-nav-home:hover { color: var(--gold); }
-
-  .mobile-nav-cta .btn-whatsapp {
-    width: 100%;
-    justify-content: center;
-    padding: 14px 24px;
-    font-size: 0.9rem;
-  }
-
-  /* ========= HERO ========= */
-  .hero {
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1600&q=80');
-    background-size: cover;
-    background-position: center 30%;
-    filter: brightness(0.25) saturate(0.6);
-  }
-
-  .hero-gradient {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(6,6,8,0.98) 0%,
-      rgba(6,6,8,0.7) 50%,
-      rgba(6,6,8,0.92) 100%
-    );
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: 20%;
-    left: 5%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(ellipse, rgba(201,168,76,0.08), transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 120px 48px 80px;
-    max-width: 720px;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 28px;
-    animation: fadeUp 0.8s ease forwards;
-  }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 8vw, 7rem);
-    line-height: 0.9;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-    animation: fadeUp 0.8s 0.15s ease both;
-  }
-
-  .hero-title span {
-    display: block;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--muted);
-    max-width: 480px;
-    margin-bottom: 40px;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-
-  .hero-ctas {
-    display: flex;
-    gap: 14px;
-    animation: fadeUp 0.8s 0.45s ease both;
-  }
-
-  .btn-hero {
-    padding: 14px 36px;
-    font-size: 0.88rem;
-    letter-spacing: 1.5px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-    text-transform: uppercase;
-    transition: all 0.25s;
-  }
-
-  .btn-hero-primary {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    border: none;
-    color: var(--black);
-    font-weight: 700;
-  }
-
-  .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,168,76,0.35); }
-
-  .btn-hero-secondary {
-    background: transparent;
-    border: 1px solid rgba(201,168,76,0.35);
-    color: var(--gold);
-  }
-
-  .btn-hero-secondary:hover { background: rgba(201,168,76,0.07); }
-
-  .hero-stats {
-    position: absolute;
-    bottom: 60px;
-    right: 60px;
-    display: flex;
-    gap: 48px;
-    animation: fadeUp 0.8s 0.6s ease both;
-  }
-
-  .stat-item { text-align: right; }
-
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.4rem;
-    letter-spacing: 2px;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ========= TICKER ========= */
-  .ticker {
-    background: var(--card);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 0;
-    overflow: hidden;
-    height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  .ticker-label {
-    background: var(--gold);
-    color: var(--black);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 0 18px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  .ticker-track {
-    display: flex;
-    gap: 60px;
-    animation: ticker 30s linear infinite;
-    padding-left: 40px;
-    white-space: nowrap;
-  }
-
-  .ticker-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.8rem;
-    color: var(--text);
-  }
-
-  .ticker-item .odds-up { color: var(--green); font-weight: 600; }
-  .ticker-item .odds-down { color: var(--red); font-weight: 600; }
-
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ========= SECTION COMMON ========= */
-  section { padding: 80px 48px; }
-
-  .section-tag {
-    font-size: 0.68rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-tag::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.4rem, 4vw, 3.4rem);
-    letter-spacing: 2px;
-    line-height: 1;
-    margin-bottom: 12px;
-  }
-
-  .section-sub {
-    color: var(--muted);
-    font-size: 0.92rem;
-    max-width: 480px;
-    line-height: 1.7;
-  }
-
-  /* ========= LIVE MATCHES ========= */
-  .matches-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 40px;
-  }
-
-  .match-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.3s;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .match-card:hover {
-    border-color: var(--gold);
-    transform: translateY(-3px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-  }
-
-  .match-card-header {
-    padding: 14px 18px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-
-  .match-sport {
-    font-size: 0.66rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .match-live-badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(46,204,113,0.12);
-    border: 1px solid rgba(46,204,113,0.3);
-    border-radius: 2px;
-    padding: 3px 8px;
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--green);
-  }
-
-  .match-card-body { padding: 18px; }
-
-  .match-teams {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-  }
-
-  .team {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    flex: 1;
-  }
-
-  .team img {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--border);
-  }
-
-  .team-name {
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-
-  .team-score {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: 2px;
-    color: var(--gold);
-  }
-
-  .vs-divider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    flex-shrink: 0;
-    padding: 0 12px;
-  }
-
-  .vs-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    color: var(--muted);
-    letter-spacing: 2px;
-  }
-
-  .match-time {
-    font-size: 0.66rem;
-    color: var(--gold);
-    letter-spacing: 1px;
-    text-align: center;
-  }
-
-  .match-odds {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 6px;
-  }
-
-  .odd-btn {
-    background: var(--card2);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 4px;
-    padding: 9px 4px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .odd-btn:hover {
-    background: rgba(201,168,76,0.12);
-    border-color: var(--gold);
-  }
-
-  .odd-btn:first-child:hover { background: rgba(46,204,113,0.12); border-color: var(--green); }
-  .odd-btn:last-child:hover { background: rgba(231,76,60,0.12); border-color: var(--red); }
-
-  .odd-label { font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
-  .odd-value { font-weight: 600; font-size: 0.88rem; margin-top: 2px; color: var(--text); }
-
-  /* ========= FEATURED SPORT SECTION ========= */
-  .featured {
-    background: var(--dark);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .featured::before {
-    content: '';
-    position: absolute;
-    right: -100px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(ellipse, rgba(201,168,76,0.05), transparent 70%);
-    pointer-events: none;
-  }
-
-  .featured-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-
-  .featured-image {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .featured-image img {
-    width: 100%;
-    height: 420px;
-    object-fit: cover;
-    display: block;
-    filter: saturate(0.7) brightness(0.85);
-    transition: all 0.4s;
-  }
-
-  .featured-image:hover img { filter: saturate(1) brightness(0.95); }
-
-  .featured-image-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(6,6,8,0.8), transparent 60%);
-  }
-
-  .featured-image-label {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 3px;
-    color: white;
-  }
-
-  .sport-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 30px;
-  }
-
-  .sport-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 18px;
-    cursor: pointer;
-    transition: all 0.25s;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .sport-card:hover {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.04);
-  }
-
-  .sport-icon {
-    width: 40px; height: 40px;
-    background: rgba(201,168,76,0.1);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-
-  .sport-info-name {
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  .sport-info-count {
-    font-size: 0.7rem;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  .sport-arrow {
-    margin-left: auto;
-    color: var(--muted);
-    font-size: 0.9rem;
-    transition: transform 0.2s;
-  }
-
-  .sport-card:hover .sport-arrow { transform: translateX(3px); color: var(--gold); }
-
-  /* ========= PROMO BANNER ========= */
-  .promo-strip {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-dark));
-    padding: 24px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .promo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 3px;
-    color: var(--black);
-  }
-
-  .promo-sub { font-size: 0.8rem; color: rgba(0,0,0,0.6); margin-top: 2px; }
-
-  .promo-btn {
-    background: var(--black);
-    color: var(--gold);
-    border: none;
-    padding: 12px 28px;
-    border-radius: 4px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 0.82rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-
-  .promo-btn:hover { background: #111; transform: scale(1.02); }
-
-  /* ========= HOW IT WORKS ========= */
-  .how-steps {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    margin-top: 48px;
-  }
-
-  .step {
-    background: var(--card);
-    padding: 36px 28px;
-    position: relative;
-    transition: background 0.3s;
-  }
-
-  .step:hover { background: var(--card2); }
-
-  .step-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 4rem;
-    color: rgba(201,168,76,0.1);
-    line-height: 1;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    letter-spacing: 2px;
-  }
-
-  .step-icon {
-    font-size: 2rem;
-    margin-bottom: 16px;
-  }
-
-  .step-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 1px;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-
-  .step-desc {
-    font-size: 0.82rem;
-    line-height: 1.7;
-    color: var(--muted);
-  }
-
-  /* ========= TESTIMONIALS ========= */
-  .testimonials { background: var(--dark); }
-
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 40px;
-  }
-
-  .testi-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px;
-    position: relative;
-  }
-
-  .testi-quote {
-    font-size: 3rem;
-    color: var(--gold);
-    line-height: 1;
-    font-family: 'Cinzel', serif;
-    margin-bottom: 12px;
-    opacity: 0.4;
-  }
-
-  .testi-text {
-    font-size: 0.85rem;
-    line-height: 1.8;
-    color: var(--text);
-    margin-bottom: 20px;
-  }
-
-  .testi-author {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .testi-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--border);
-  }
-
-  .testi-name { font-weight: 500; font-size: 0.84rem; }
-  .testi-meta { font-size: 0.7rem; color: var(--muted); }
-
-  .stars {
-    color: var(--gold);
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    margin-bottom: 14px;
-  }
-
-  /* ========= CASINO SECTION ========= */
-  .casino-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    margin-top: 36px;
-  }
-
-  .casino-card {
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    aspect-ratio: 3/4;
-  }
-
-  .casino-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s;
-    filter: saturate(0.6) brightness(0.75);
-  }
-
-  .casino-card:hover img { transform: scale(1.05); filter: saturate(1) brightness(0.85); }
-
-  .casino-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(6,6,8,0.9) 0%, transparent 55%);
-  }
-
-  .casino-card-info {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-  }
-
-  .casino-name {
-    font-weight: 500;
-    font-size: 0.82rem;
-    margin-bottom: 4px;
-  }
-
-  .casino-meta {
-    font-size: 0.66rem;
-    color: var(--gold);
-    letter-spacing: 1px;
-  }
-
-  .casino-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--gold);
-    color: var(--black);
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-  }
-
-  /* ========= APP DOWNLOAD ========= */
-  .app-section {
-    background: var(--card);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .app-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .app-mockup {
-    position: relative;
-    text-align: center;
-  }
-
-  .app-mockup img {
-    width: 280px;
-    border-radius: 24px;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.2);
-    filter: brightness(0.9);
-  }
-
-  .app-glow {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 60px;
-    background: var(--gold);
-    filter: blur(60px);
-    opacity: 0.15;
-  }
-
-  .download-btns {
-    display: flex;
-    gap: 12px;
-    margin-top: 28px;
-    flex-wrap: wrap;
-  }
-
-  .dl-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 12px 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    color: var(--text);
-  }
-
-  .dl-btn:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
-
-  .dl-icon { font-size: 1.4rem; }
-  .dl-text-small { font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-  .dl-text-big { font-size: 0.9rem; font-weight: 500; }
-
-  .feature-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 24px;
-  }
-
-  .feature-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-
-  .feature-item::before {
-    content: '✓';
-    width: 22px;
-    height: 22px;
-    background: rgba(46,204,113,0.12);
-    border: 1px solid rgba(46,204,113,0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.65rem;
-    color: var(--green);
-    flex-shrink: 0;
-  }
-
-  /* ========= PAYMENT ========= */
-  .payments-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 32px;
-    flex-wrap: wrap;
-  }
-
-  .payment-item {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 12px 22px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--muted);
-    letter-spacing: 1px;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-
-  .payment-item:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* ========= FOOTER ========= */
-  footer {
-    background: var(--dark);
-    border-top: 1px solid var(--border);
-    padding: 60px 48px 30px;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
-  }
-
-  .footer-brand p {
-    font-size: 0.8rem;
-    line-height: 1.8;
-    color: var(--muted);
-    margin-top: 14px;
-    max-width: 280px;
-  }
-
-  .footer-col-title {
-    font-size: 0.7rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 18px;
-  }
-
-  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-
-  .footer-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.82rem;
-    transition: color 0.2s;
-  }
-
-  .footer-links a:hover { color: var(--text); }
-
-  .footer-bottom {
-    border-top: 1px solid var(--border);
-    padding-top: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-bottom p {
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.5px;
-  }
-
-  .social-links {
-    display: flex;
-    gap: 10px;
-  }
-
-  .social-btn {
-    width: 34px;
-    height: 34px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    color: var(--muted);
-  }
-
-  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-  .age-badge {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 6px 12px;
-    font-size: 0.72rem;
-    color: var(--muted);
-  }
-
-  /* ========= FLOATING BET SLIP ========= */
-  .bet-slip {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 500;
-  }
-
-  .bet-slip-toggle {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    border: none;
-    border-radius: 50px;
-    padding: 14px 22px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 0.82rem;
-    letter-spacing: 1px;
-    color: var(--black);
-    cursor: pointer;
-    box-shadow: 0 8px 28px rgba(201,168,76,0.4);
-    transition: all 0.2s;
-  }
-
-  .bet-slip-toggle:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(201,168,76,0.5); }
-
-  .bet-count {
-    background: var(--black);
-    color: var(--gold);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 0.72rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-  }
-
-  /* ========= RESPONSIVE ========= */
-  @media (max-width: 1024px) {
-    .nav-links { gap: 0; }
-    .nav-links > li > a { font-size: 0.7rem; padding: 8px 10px; letter-spacing: 0.8px; }
-    .matches-grid { grid-template-columns: repeat(2, 1fr); }
-    .featured-inner { grid-template-columns: 1fr; }
-    .how-steps { grid-template-columns: repeat(2, 1fr); }
-    .casino-grid { grid-template-columns: repeat(3, 1fr); }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 16px; }
-    .nav-links { display: none; }
-    .hamburger { display: flex; }
-    .btn-whatsapp { padding: 8px 14px; font-size: 0.72rem; }
-    section { padding: 60px 20px; }
-    .hero-content { padding: 100px 20px 60px; }
-    .hero-stats { right: 20px; bottom: 30px; gap: 24px; }
-    .matches-grid { grid-template-columns: 1fr; }
-    .testi-grid { grid-template-columns: 1fr; }
-    .casino-grid { grid-template-columns: repeat(2, 1fr); }
-    .app-inner { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .promo-strip { flex-direction: column; text-align: center; }
-    .how-steps { grid-template-columns: 1fr; }
-  }
-
-  /* ========= SCROLL REVEAL ========= */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* ========= ODDS FLASH ========= */
-  @keyframes oddFlash {
-    0% { background: rgba(46,204,113,0.3); }
-    100% { background: transparent; }
-  }
-
-  .flash-green { animation: oddFlash 0.6s ease; }
-
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">
-    <div class="logo-icon">🏏</div>
-    BatKing
-  </a>
-
-  <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-
-    <!-- Betting Exchanges Dropdown -->
-    <li>
-      <a href="#">Betting Exchanges <span class="dropdown-arrow">▼</span></a>
-      <div class="dropdown">
-        <div class="dropdown-label">Popular IDs</div>
-        <a href="#"><div class="dropdown-icon">⭐</div> Fairbet ID</a>
-        <a href="#"><div class="dropdown-icon">🌍</div> World777 ID</a>
-        <a href="#"><div class="dropdown-icon">🌀</div> Sky Exchange ID</a>
-        <a href="#"><div class="dropdown-icon">🐅</div> TigerExch ID</a>
-        <a href="#"><div class="dropdown-icon">💎</div> DiamondExch ID</a>
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-label">Compare</div>
-        <a href="#"><div class="dropdown-icon">⚖️</div> Fairbet vs World777</a>
-      </div>
-    </li>
-
-    <!-- Tournaments Dropdown -->
-    <li>
-      <a href="#">Tournaments <span class="dropdown-arrow">▼</span></a>
-      <div class="dropdown">
-        <a href="#"><div class="dropdown-icon">🏆</div> IPL 2026 Cricket ID</a>
-        <a href="#"><div class="dropdown-icon">👩</div> Women's T20 World Cup ID</a>
-        <a href="#"><div class="dropdown-icon">🏏</div> WPL Cricket ID</a>
-        <a href="#"><div class="dropdown-icon">🌙</div> PSL Cricket ID</a>
-      </div>
-    </li>
-
-    <!-- Match Center Dropdown -->
-    <li>
-      <a href="#">Match Center <span class="dropdown-arrow">▼</span></a>
-      <div class="dropdown">
-        <a href="#"><div class="dropdown-icon">🔮</div> Today's Match Predictions</a>
-        <a href="#"><div class="dropdown-icon">📡</div> Live Scores & Points Tables</a>
-        <a href="#"><div class="dropdown-icon">📊</div> Player Stats</a>
-      </div>
-    </li>
-
-    <!-- Offers & Proof Dropdown -->
-    <li>
-      <a href="#">Offers & Proof <span class="dropdown-arrow">▼</span></a>
-      <div class="dropdown">
-        <a href="#"><div class="dropdown-icon">🎁</div> Bonus Offers</a>
-        <a href="#"><div class="dropdown-icon">✅</div> Withdrawal Proofs</a>
-        <div class="dropdown-divider"></div>
-        <a href="#"><div class="dropdown-icon">🤝</div> Refer 5 Friends = ₹2000 Bonus</a>
-      </div>
-    </li>
-  </ul>
-
-  <div class="nav-right">
-    <a href="https://wa.me/" class="btn-whatsapp" target="_blank" rel="noopener">
-      <span class="btn-whatsapp-icon">🟢</span>
-      GET CRICKET ID
-    </a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobileNav">
-  <div class="mobile-nav-section">
-    <a href="#" class="mobile-nav-home">Home</a>
-  </div>
-
-  <div class="mobile-nav-section">
-    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
-      Betting Exchanges <span class="chevron">▼</span>
-    </div>
-    <div class="mobile-subnav">
-      <a href="#">Fairbet ID</a>
-      <a href="#">World777 ID</a>
-      <a href="#">Sky Exchange ID</a>
-      <a href="#">TigerExch ID</a>
-      <a href="#">DiamondExch ID</a>
-      <a href="#">Fairbet vs World777</a>
-    </div>
-  </div>
-
-  <div class="mobile-nav-section">
-    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
-      Tournaments <span class="chevron">▼</span>
-    </div>
-    <div class="mobile-subnav">
-      <a href="#">IPL 2026 Cricket ID</a>
-      <a href="#">Women's T20 World Cup ID</a>
-      <a href="#">WPL Cricket ID</a>
-      <a href="#">PSL Cricket ID</a>
-    </div>
-  </div>
-
-  <div class="mobile-nav-section">
-    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
-      Match Center <span class="chevron">▼</span>
-    </div>
-    <div class="mobile-subnav">
-      <a href="#">Today's Match Predictions</a>
-      <a href="#">Live Scores & Points Tables</a>
-      <a href="#">Player Stats</a>
-    </div>
-  </div>
-
-  <div class="mobile-nav-section">
-    <div class="mobile-nav-title" onclick="this.classList.toggle('expanded');this.nextElementSibling.classList.toggle('open')">
-      Offers & Proof <span class="chevron">▼</span>
-    </div>
-    <div class="mobile-subnav">
-      <a href="#">Bonus Offers</a>
-      <a href="#">Withdrawal Proofs</a>
-      <a href="#">Refer 5 Friends = ₹2000 Bonus</a>
-    </div>
-  </div>
-
-  <div class="mobile-nav-cta">
-    <a href="https://wa.me/" class="btn-whatsapp" target="_blank" rel="noopener">
-      <span class="btn-whatsapp-icon">🟢</span>
-      GET CRICKET ID
-    </a>
-  </div>
-</div>
+<body data-page="home">
+<div id="nav-mount"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1542,17 +17,23 @@
   <div class="hero-gradient"></div>
   <div class="hero-glow"></div>
   <div class="hero-content">
-    <div class="hero-badge">⚡ India's #1 Prediction Exchange</div>
+    <div class="hero-badge">⚡ India's #1 Cricket ID Provider</div>
     <h1 class="hero-title">
-      Play The
-      <span>Odds.</span>
-      Own The
-      <span>Game.</span>
+      Get Your
+      <span>Cricket ID.</span>
+      Win With
+      <span>Confidence.</span>
     </h1>
-    <p class="hero-sub">Back or lay any outcome. Cricket, Football, Tennis & 20+ sports with real-time odds set by the market — not a bookmaker.</p>
+    <p class="hero-sub">Instant ID in <strong class="hl-gold">under 2 minutes</strong> on WhatsApp. <strong class="hl-green">15% welcome bonus</strong> — 3× what DaddyAnna offers. Daily predictions, Dream11 tips, live blogs & withdrawal proofs you can actually verify.</p>
     <div class="hero-ctas">
-      <button class="btn-hero btn-hero-primary">Start Betting Free →</button>
-      <button class="btn-hero btn-hero-secondary">Watch Demo</button>
+      <a href="https://wa.me/" class="btn-hero btn-hero-primary" target="_blank" rel="noopener">🟢 Get Cricket ID on WhatsApp →</a>
+      <button class="btn-hero btn-hero-secondary">View Today's Predictions</button>
+    </div>
+    <div class="hero-trust-row">
+      <div class="trust-chip">✅ Instant ID in 2 min</div>
+      <div class="trust-chip">💰 15% Welcome Bonus</div>
+      <div class="trust-chip">⚡ 2-Min Withdrawals</div>
+      <div class="trust-chip">🎯 Daily Predictions</div>
     </div>
   </div>
   <div class="hero-stats">
@@ -1565,8 +46,8 @@
       <div class="stat-label">Paid Out</div>
     </div>
     <div class="stat-item">
-      <div class="stat-num">0.5%</div>
-      <div class="stat-label">Commission</div>
+      <div class="stat-num">15%</div>
+      <div class="stat-label">Welcome Bonus</div>
     </div>
   </div>
 </section>
@@ -1849,11 +330,535 @@
 <!-- PROMO STRIP -->
 <div class="promo-strip reveal">
   <div>
-    <div class="promo-text">🎁 100% WELCOME BONUS — UP TO ₹10,000</div>
-    <div class="promo-sub">New users only • Min deposit ₹500 • T&Cs apply</div>
+    <div class="promo-text">🎁 15% WELCOME BONUS — 3× BETTER THAN DADDYANNA'S 5%</div>
+    <div class="promo-sub">New users only • No lock-in • Instant credit to your Cricket ID • T&Cs apply</div>
   </div>
-  <button class="promo-btn">Claim Now →</button>
+  <a href="https://wa.me/" class="promo-btn" target="_blank" rel="noopener">Claim on WhatsApp →</a>
 </div>
+
+<!-- WHY CHOOSE BATKING -->
+<section class="compare-section">
+  <div class="section-tag">Why BatKing</div>
+  <h2 class="section-title">BEATS DADDYANNA, SPORTISTAN & WPLEAGUE</h2>
+  <p class="section-sub">Compare side-by-side. We offer more bonus, more predictions, and we're a direct ID provider — not an affiliate middleman.</p>
+
+  <div class="compare-table reveal">
+    <div class="compare-row header">
+      <div>Feature</div>
+      <div class="compare-cell">🏏 BatKing</div>
+      <div class="compare-cell">DaddyAnna</div>
+      <div class="compare-cell">Sportistan</div>
+      <div class="compare-cell">WPLeague</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Welcome Bonus</div>
+      <div class="compare-cell us">15%</div>
+      <div class="compare-cell them">5%</div>
+      <div class="compare-cell them">10%</div>
+      <div class="compare-cell them">—</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Instant ID Creation</div>
+      <div class="compare-cell us">✓ 2 min</div>
+      <div class="compare-cell them">2 min</div>
+      <div class="compare-cell them">5–10 min</div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Daily Match Predictions</div>
+      <div class="compare-cell us"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them"><span class="compare-check">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Dream11 Fantasy Tips</div>
+      <div class="compare-cell us"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Live Blog / Match Previews</div>
+      <div class="compare-cell us"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them"><span class="compare-check">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Verified Withdrawal Proofs</div>
+      <div class="compare-cell us"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Direct ID Provider</div>
+      <div class="compare-cell us"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them"><span class="compare-check">✓</span></div>
+      <div class="compare-cell them">Affiliate only</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Coverage (Men + Women + T20 + Test)</div>
+      <div class="compare-cell us">All formats</div>
+      <div class="compare-cell them">Limited</div>
+      <div class="compare-cell them">Good</div>
+      <div class="compare-cell them">Women + few men</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-feature">Refer Friend Bonus</div>
+      <div class="compare-cell us">₹2000</div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+      <div class="compare-cell them">₹500</div>
+      <div class="compare-cell them"><span class="compare-x">✗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TODAY'S MATCH PREDICTIONS -->
+<section>
+  <div class="section-tag">Today's Predictions</div>
+  <h2 class="section-title">DAILY MATCH CENTER</h2>
+  <p class="section-sub">Fresh analysis every day. Match previews, pitch reports, head-to-head stats & our confident pick for every big game.</p>
+
+  <div class="predictions-grid reveal">
+
+    <!-- Prediction 1 -->
+    <div class="prediction-card">
+      <div class="prediction-header">
+        <span class="prediction-tag">🏏 IPL 2026 • Match #32</span>
+        <span class="prediction-date">Today • 19:30 IST</span>
+      </div>
+      <div class="prediction-body">
+        <div class="prediction-match">RCB vs MI — Chinnaswamy</div>
+        <div class="prediction-venue">Bengaluru • Day-night • Dew factor expected after 20th over</div>
+
+        <div class="prediction-pick">
+          <div class="prediction-pick-label">🎯 Our Pick</div>
+          <div class="prediction-pick-text">RCB to win. Back Kohli for top batsman (odds 3.2).</div>
+        </div>
+
+        <p class="prediction-analysis">
+          Chinnaswamy averages 198 first innings this season. MI's pace attack has struggled against spin-heavy middle overs. RCB's home advantage + Kohli's form (avg 58 in last 5) makes them the clear pick. Expect 190+ total.
+        </p>
+
+        <div class="prediction-stats">
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">4–1</div>
+            <div class="prediction-stat-label">H2H (Last 5)</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">198</div>
+            <div class="prediction-stat-label">Avg 1st Innings</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">72%</div>
+            <div class="prediction-stat-label">Win Confidence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prediction 2 -->
+    <div class="prediction-card">
+      <div class="prediction-header">
+        <span class="prediction-tag">🏏 WPL 2026 • Match #18</span>
+        <span class="prediction-date">Today • 15:30 IST</span>
+      </div>
+      <div class="prediction-body">
+        <div class="prediction-match">MI-W vs DC-W — Brabourne</div>
+        <div class="prediction-venue">Mumbai • Afternoon game • Track assists seamers early</div>
+
+        <div class="prediction-pick">
+          <div class="prediction-pick-label">🎯 Our Pick</div>
+          <div class="prediction-pick-text">MI-W to win. Harmanpreet top Indian run-scorer (odds 2.8).</div>
+        </div>
+
+        <p class="prediction-analysis">
+          Mumbai's batters have dominated at Brabourne with a 4-match winning streak. Delhi's top order relies heavily on Meg Lanning — if she falls early, they collapse. Watch for Amanjot Kaur with the new ball in the powerplay.
+        </p>
+
+        <div class="prediction-stats">
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">3–1</div>
+            <div class="prediction-stat-label">H2H WPL</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">164</div>
+            <div class="prediction-stat-label">Avg Total</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">68%</div>
+            <div class="prediction-stat-label">Win Confidence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prediction 3 -->
+    <div class="prediction-card">
+      <div class="prediction-header">
+        <span class="prediction-tag">🏏 IND vs PAK • Asia Cup</span>
+        <span class="prediction-date">Tomorrow • 19:00 IST</span>
+      </div>
+      <div class="prediction-body">
+        <div class="prediction-match">India vs Pakistan — Dubai</div>
+        <div class="prediction-venue">Dubai International • Batting paradise • Expect 180+ from team batting first</div>
+
+        <div class="prediction-pick">
+          <div class="prediction-pick-label">🎯 Our Pick</div>
+          <div class="prediction-pick-text">India to win. Bumrah top wicket-taker (odds 3.5).</div>
+        </div>
+
+        <p class="prediction-analysis">
+          India's batting depth outweighs Pakistan's bowling resources. Rohit Sharma averages 71 vs PAK in UAE. Bumrah has dismissed Babar Azam 4 times in T20Is — a key matchup. Look at Suryakumar's death-over hitting as a value bet.
+        </p>
+
+        <div class="prediction-stats">
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">8–2</div>
+            <div class="prediction-stat-label">H2H (T20)</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">174</div>
+            <div class="prediction-stat-label">Avg 1st Innings</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">78%</div>
+            <div class="prediction-stat-label">Win Confidence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prediction 4 -->
+    <div class="prediction-card">
+      <div class="prediction-header">
+        <span class="prediction-tag">🏏 PSL 2026 • Match #24</span>
+        <span class="prediction-date">Tomorrow • 20:00 PKT</span>
+      </div>
+      <div class="prediction-body">
+        <div class="prediction-match">Karachi Kings vs Lahore Qalandars</div>
+        <div class="prediction-venue">Gaddafi Stadium • Spin-friendly surface • Dew late</div>
+
+        <div class="prediction-pick">
+          <div class="prediction-pick-label">🎯 Our Pick</div>
+          <div class="prediction-pick-text">Lahore Qalandars. Shaheen to open bowling + bat at 5.</div>
+        </div>
+
+        <p class="prediction-analysis">
+          Qalandars' spin quartet is the strongest in the league. Karachi's middle-order is fragile against wrist spin (avg 24 in overs 7–15). Pick Rashid Khan in your fantasy XI — he's taken 11 wickets in last 4 matches at this ground.
+        </p>
+
+        <div class="prediction-stats">
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">3–2</div>
+            <div class="prediction-stat-label">H2H (PSL)</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">168</div>
+            <div class="prediction-stat-label">Avg Total</div>
+          </div>
+          <div class="prediction-stat-item">
+            <div class="prediction-stat-num">64%</div>
+            <div class="prediction-stat-label">Win Confidence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DREAM11 / FANTASY TIPS -->
+<section class="fantasy-section">
+  <div class="section-tag">Dream11 Tips</div>
+  <h2 class="section-title">FANTASY WINNING XI</h2>
+  <p class="section-sub">Expert-picked fantasy teams with Captain & Vice-Captain recommendations for tonight's matches.</p>
+
+  <div class="fantasy-grid reveal">
+
+    <div class="fantasy-team">
+      <div class="fantasy-team-title">RCB vs MI — Grand League XI</div>
+      <div class="fantasy-team-sub">Today 19:30 • Lineup as per latest team news</div>
+
+      <div class="fantasy-captain">
+        <div class="fantasy-badge">C</div>
+        <div class="fantasy-cap-info">
+          <div class="fantasy-cap-name">Virat Kohli</div>
+          <div class="fantasy-player-role">RCB • Top-Order Bat</div>
+        </div>
+        <div class="fantasy-player-pts fantasy-cap-mult">2x</div>
+      </div>
+
+      <div class="fantasy-captain">
+        <div class="fantasy-badge">VC</div>
+        <div class="fantasy-cap-info">
+          <div class="fantasy-cap-name">Jasprit Bumrah</div>
+          <div class="fantasy-player-role">MI • Pacer</div>
+        </div>
+        <div class="fantasy-player-pts fantasy-cap-mult">1.5x</div>
+      </div>
+
+      <div class="fantasy-player"><div>Faf du Plessis<div class="fantasy-player-role">RCB • BAT</div></div><div class="fantasy-player-pts">95</div></div>
+      <div class="fantasy-player"><div>Rohit Sharma<div class="fantasy-player-role">MI • BAT</div></div><div class="fantasy-player-pts">88</div></div>
+      <div class="fantasy-player"><div>Suryakumar Yadav<div class="fantasy-player-role">MI • BAT</div></div><div class="fantasy-player-pts">92</div></div>
+      <div class="fantasy-player"><div>Glenn Maxwell<div class="fantasy-player-role">RCB • AR</div></div><div class="fantasy-player-pts">78</div></div>
+      <div class="fantasy-player"><div>Hardik Pandya<div class="fantasy-player-role">MI • AR</div></div><div class="fantasy-player-pts">84</div></div>
+      <div class="fantasy-player"><div>Dinesh Karthik<div class="fantasy-player-role">RCB • WK</div></div><div class="fantasy-player-pts">66</div></div>
+      <div class="fantasy-player"><div>Mohammed Siraj<div class="fantasy-player-role">RCB • BOWL</div></div><div class="fantasy-player-pts">74</div></div>
+      <div class="fantasy-player"><div>Yuzvendra Chahal<div class="fantasy-player-role">RCB • BOWL</div></div><div class="fantasy-player-pts">72</div></div>
+    </div>
+
+    <div class="fantasy-team">
+      <div class="fantasy-team-title">IND vs PAK — Safe XI</div>
+      <div class="fantasy-team-sub">Tomorrow 19:00 • Low-risk captaincy for GL contests</div>
+
+      <div class="fantasy-captain">
+        <div class="fantasy-badge">C</div>
+        <div class="fantasy-cap-info">
+          <div class="fantasy-cap-name">Suryakumar Yadav</div>
+          <div class="fantasy-player-role">IND • Middle-Order</div>
+        </div>
+        <div class="fantasy-player-pts fantasy-cap-mult">2x</div>
+      </div>
+
+      <div class="fantasy-captain">
+        <div class="fantasy-badge">VC</div>
+        <div class="fantasy-cap-info">
+          <div class="fantasy-cap-name">Babar Azam</div>
+          <div class="fantasy-player-role">PAK • Opener</div>
+        </div>
+        <div class="fantasy-player-pts fantasy-cap-mult">1.5x</div>
+      </div>
+
+      <div class="fantasy-player"><div>Rohit Sharma<div class="fantasy-player-role">IND • BAT</div></div><div class="fantasy-player-pts">94</div></div>
+      <div class="fantasy-player"><div>Shubman Gill<div class="fantasy-player-role">IND • BAT</div></div><div class="fantasy-player-pts">86</div></div>
+      <div class="fantasy-player"><div>Mohammad Rizwan<div class="fantasy-player-role">PAK • WK</div></div><div class="fantasy-player-pts">82</div></div>
+      <div class="fantasy-player"><div>Hardik Pandya<div class="fantasy-player-role">IND • AR</div></div><div class="fantasy-player-pts">88</div></div>
+      <div class="fantasy-player"><div>Shadab Khan<div class="fantasy-player-role">PAK • AR</div></div><div class="fantasy-player-pts">76</div></div>
+      <div class="fantasy-player"><div>Jasprit Bumrah<div class="fantasy-player-role">IND • BOWL</div></div><div class="fantasy-player-pts">92</div></div>
+      <div class="fantasy-player"><div>Shaheen Afridi<div class="fantasy-player-role">PAK • BOWL</div></div><div class="fantasy-player-pts">84</div></div>
+      <div class="fantasy-player"><div>Kuldeep Yadav<div class="fantasy-player-role">IND • BOWL</div></div><div class="fantasy-player-pts">72</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WITHDRAWAL PROOFS -->
+<section>
+  <div class="section-tag">Verified Withdrawals</div>
+  <h2 class="section-title">REAL PAYOUT PROOFS</h2>
+  <p class="section-sub">Every withdrawal below is from a real user in the last 24 hours. All payouts are hashed & verifiable on request.</p>
+
+  <div class="proofs-grid reveal">
+    <div class="proof-card">
+      <div class="proof-amount">₹84,500</div>
+      <div class="proof-time">Processed in 1 min 42 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Rahul S. • Mumbai</div>
+        <div class="proof-method">UPI</div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-amount">₹1,24,000</div>
+      <div class="proof-time">Processed in 2 min 08 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Priya K. • Pune</div>
+        <div class="proof-method">PhonePe</div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-amount">₹32,750</div>
+      <div class="proof-time">Processed in 45 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Aakash V. • Delhi</div>
+        <div class="proof-method">GPay</div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-amount">₹2,18,900</div>
+      <div class="proof-time">Processed in 3 min 12 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Vikram M. • Bangalore</div>
+        <div class="proof-method">IMPS</div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-amount">₹67,200</div>
+      <div class="proof-time">Processed in 1 min 18 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Sneha R. • Chennai</div>
+        <div class="proof-method">UPI</div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-amount">₹45,000</div>
+      <div class="proof-time">Processed in 58 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Arjun P. • Hyderabad</div>
+        <div class="proof-method">Paytm</div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-amount">₹1,05,400</div>
+      <div class="proof-time">Processed in 2 min 41 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Neha T. • Ahmedabad</div>
+        <div class="proof-method">Net Banking</div>
+      </div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-amount">₹28,600</div>
+      <div class="proof-time">Processed in 39 sec</div>
+      <div class="proof-meta">
+        <div class="proof-user">Karan J. • Kolkata</div>
+        <div class="proof-method">UPI</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="proofs-cta">
+    <strong>Total paid in last 24 hours: ₹8.9 Cr+</strong> across 2,400+ withdrawals • Average processing time 1 min 47 sec
+  </div>
+</section>
+
+<!-- POINTS TABLE & PLAYER STATS -->
+<section class="compare-section">
+  <div class="section-tag">Live Standings</div>
+  <h2 class="section-title">IPL 2026 • POINTS TABLE</h2>
+  <p class="section-sub">Updated after every match. Click any team for full squad, recent form & upcoming fixtures.</p>
+
+  <div class="tables-wrap reveal">
+
+    <div class="table-card">
+      <div class="table-card-head">
+        <div class="table-card-title">Points Table</div>
+        <span class="prediction-date">Updated 2 min ago</span>
+      </div>
+      <table class="points-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>P</th>
+            <th>W</th>
+            <th>L</th>
+            <th>NRR</th>
+            <th>Pts</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="team-row"><td class="pos-1">1. RCB</td><td>10</td><td>8</td><td>2</td><td>+1.42</td><td>16</td></tr>
+          <tr class="team-row"><td class="pos-2">2. MI</td><td>10</td><td>7</td><td>3</td><td>+0.98</td><td>14</td></tr>
+          <tr class="team-row"><td class="pos-3">3. CSK</td><td>10</td><td>7</td><td>3</td><td>+0.62</td><td>14</td></tr>
+          <tr class="team-row"><td class="pos-4">4. KKR</td><td>10</td><td>6</td><td>4</td><td>+0.28</td><td>12</td></tr>
+          <tr class="team-row"><td>5. SRH</td><td>10</td><td>5</td><td>5</td><td>+0.04</td><td>10</td></tr>
+          <tr class="team-row"><td>6. DC</td><td>10</td><td>4</td><td>6</td><td>-0.18</td><td>8</td></tr>
+          <tr class="team-row"><td>7. RR</td><td>10</td><td>4</td><td>6</td><td>-0.42</td><td>8</td></tr>
+          <tr class="team-row"><td>8. PBKS</td><td>10</td><td>3</td><td>7</td><td>-0.88</td><td>6</td></tr>
+          <tr class="team-row"><td>9. GT</td><td>10</td><td>3</td><td>7</td><td>-1.02</td><td>6</td></tr>
+          <tr class="team-row"><td>10. LSG</td><td>10</td><td>2</td><td>8</td><td>-1.36</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-card">
+      <div class="table-card-head">
+        <div class="table-card-title">Top Run Scorers</div>
+      </div>
+      <div>
+        <div class="top-scorer">
+          <div class="scorer-rank">1</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Virat Kohli</div>
+            <div class="scorer-team">RCB • 10 matches</div>
+          </div>
+          <div class="scorer-stat">542</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r2">2</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Suryakumar Yadav</div>
+            <div class="scorer-team">MI • 10 matches</div>
+          </div>
+          <div class="scorer-stat">488</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r3">3</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Ruturaj Gaikwad</div>
+            <div class="scorer-team">CSK • 10 matches</div>
+          </div>
+          <div class="scorer-stat">452</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r4">4</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Shubman Gill</div>
+            <div class="scorer-team">GT • 10 matches</div>
+          </div>
+          <div class="scorer-stat">418</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r5">5</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Faf du Plessis</div>
+            <div class="scorer-team">RCB • 10 matches</div>
+          </div>
+          <div class="scorer-stat">392</div>
+        </div>
+      </div>
+
+      <div class="table-card-head table-card-head-split">
+        <div class="table-card-title">Top Wicket Takers</div>
+      </div>
+      <div>
+        <div class="top-scorer">
+          <div class="scorer-rank">1</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Jasprit Bumrah</div>
+            <div class="scorer-team">MI • 10 matches</div>
+          </div>
+          <div class="scorer-stat">22</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r2">2</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Yuzvendra Chahal</div>
+            <div class="scorer-team">RCB • 10 matches</div>
+          </div>
+          <div class="scorer-stat">19</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r3">3</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Rashid Khan</div>
+            <div class="scorer-team">GT • 10 matches</div>
+          </div>
+          <div class="scorer-stat">17</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r4">4</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Kuldeep Yadav</div>
+            <div class="scorer-team">DC • 10 matches</div>
+          </div>
+          <div class="scorer-stat">16</div>
+        </div>
+        <div class="top-scorer">
+          <div class="scorer-rank r5">5</div>
+          <div class="scorer-info">
+            <div class="scorer-name">Mohammed Siraj</div>
+            <div class="scorer-team">RCB • 10 matches</div>
+          </div>
+          <div class="scorer-stat">15</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- SPORTS FEATURED -->
 <section class="featured">
@@ -1955,8 +960,66 @@
   </div>
 </section>
 
+<!-- BEGINNER'S GUIDE -->
+<section class="guide-section">
+  <div class="section-tag">Beginner's Guide</div>
+  <h2 class="section-title">NEW TO CRICKET BETTING?</h2>
+  <p class="section-sub">Step-by-step guides written by pros. Everything from odds basics to advanced IPL strategies — completely free.</p>
+
+  <div class="guide-grid reveal">
+    <div class="guide-card">
+      <div class="guide-num">01</div>
+      <h4>How Cricket Odds Work</h4>
+      <p>Decimal vs fractional odds, implied probability, back/lay explained with real IPL examples you can follow tonight.</p>
+      <div class="guide-read">Read • 6 min →</div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-num">02</div>
+      <h4>Creating Your First Cricket ID</h4>
+      <p>Exactly what details you need, how to verify, what bonuses to claim, and the 3 mistakes that delay first withdrawal.</p>
+      <div class="guide-read">Read • 4 min →</div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-num">03</div>
+      <h4>Reading a Pitch Report</h4>
+      <p>How to spot batting paradises vs bowler-friendly decks. Real pitch analyses from Wankhede, Chinnaswamy & Eden Gardens.</p>
+      <div class="guide-read">Read • 8 min →</div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-num">04</div>
+      <h4>Session Betting Explained</h4>
+      <p>Why session (over-by-over) markets are the sharpest way to profit during live IPL games. Plus 4 advanced strategies.</p>
+      <div class="guide-read">Read • 7 min →</div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-num">05</div>
+      <h4>Dream11 Bankroll Strategy</h4>
+      <p>How to split between Grand League and Small League contests. Our 70/30 rule has netted ₹1.2L+ in the last season.</p>
+      <div class="guide-read">Read • 5 min →</div>
+    </div>
+    <div class="guide-card">
+      <div class="guide-num">06</div>
+      <h4>Responsible Play Guidelines</h4>
+      <p>Deposit limits, cool-off periods, and self-exclusion. How BatKing protects players and what to do if you need help.</p>
+      <div class="guide-read">Read • 4 min →</div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERRAL BANNER -->
+<div class="referral-banner reveal">
+  <div>
+    <h3>REFER 5 FRIENDS — EARN <span>₹2000</span> INSTANT</h3>
+    <p>Every friend who creates their Cricket ID and makes a first deposit earns you ₹400 credit. Paid within 10 minutes. No cap on total referrals.</p>
+  </div>
+  <a href="https://wa.me/" class="btn-whatsapp" target="_blank" rel="noopener">
+    <span class="btn-whatsapp-icon">🟢</span>
+    Share on WhatsApp
+  </a>
+</div>
+
 <!-- CASINO -->
-<section style="background: var(--dark); border-top: 1px solid var(--border);">
+<section class="casino-section-wrap">
   <div class="section-tag">Live Casino</div>
   <h2 class="section-title">CASINO ROYALE</h2>
   <p class="section-sub">Premium live tables powered by Evolution, Pragmatic & Ezugi. Play 24/7 with real dealers.</p>
@@ -2007,6 +1070,96 @@
   </div>
 </section>
 
+<!-- LIVE BLOG / MATCH COMMENTARY -->
+<section>
+  <div class="section-tag">Live Blog</div>
+  <h2 class="section-title">LIVE BALL-BY-BALL</h2>
+  <p class="section-sub">Real-time commentary from inside every major match. Wickets, sixes, tactical shifts — reported the second they happen.</p>
+
+  <div class="blog-grid reveal">
+    <div class="blog-feed" id="liveBlogFeed">
+      <div class="blog-entry">
+        <div class="blog-time">18.4</div>
+        <div class="blog-event"><span class="tag hot">Wicket!</span> Suryakumar gone! Caught at long-on trying to clear the boundary. MI 142/5, pressure mounting with 14 balls left.</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">18.3</div>
+        <div class="blog-event"><span class="tag six">SIX</span> Tilak Varma clubs Chahal over midwicket. 22 runs needed off 15 balls. Game on!</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">18.1</div>
+        <div class="blog-event"><span class="tag">Tactics</span> Faf brings Siraj back for the death overs — 2 overs left for him. Smart move given his yorker accuracy tonight.</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">17.5</div>
+        <div class="blog-event"><span class="tag six">SIX</span> MAXIMUM! Hardik launches Maxwell into the stands. MI need 34 off 18 now.</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">17.2</div>
+        <div class="blog-event"><span class="tag">Four</span> Suryakumar picks the gap at deep point. Another crucial boundary — his 3rd four of the over.</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">16.6</div>
+        <div class="blog-event"><span class="tag hot">Review</span> RCB go upstairs for a caught-behind. Replay shows no bat involved. MI survive.</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">16.3</div>
+        <div class="blog-event"><span class="tag">Partnership</span> 50-run stand between Surya and Tilak Varma. MI crawling back into this chase.</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">15.4</div>
+        <div class="blog-event"><span class="tag hot">Wicket!</span> Rohit Sharma falls LBW to Chahal. Huge moment for RCB. MI 96/3.</div>
+      </div>
+      <div class="blog-entry">
+        <div class="blog-time">14.2</div>
+        <div class="blog-event"><span class="tag">Drinks</span> Short break. MI need 86 off 35. Tilak just joined Rohit in the middle.</div>
+      </div>
+    </div>
+
+    <div class="blog-side">
+      <div class="blog-widget">
+        <div class="blog-widget-title">Live Scores</div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">RCB vs MI</div>
+          <div class="mini-score-val">142/4</div>
+        </div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">CSK vs KKR</div>
+          <div class="mini-score-val">168/6</div>
+        </div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">DC vs SRH</div>
+          <div class="mini-score-val">Tomorrow</div>
+        </div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">RR vs LSG</div>
+          <div class="mini-score-val">Tomorrow</div>
+        </div>
+      </div>
+
+      <div class="blog-widget">
+        <div class="blog-widget-title">Trending Players</div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">V. Kohli</div>
+          <div class="mini-score-val">82 (51)</div>
+        </div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">J. Bumrah</div>
+          <div class="mini-score-val">3/24 (4)</div>
+        </div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">S. Mandhana</div>
+          <div class="mini-score-val">68 (42)</div>
+        </div>
+        <div class="mini-score-row">
+          <div class="mini-score-team">Y. Chahal</div>
+          <div class="mini-score-val">2/31 (4)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="section-tag">Testimonials</div>
@@ -2027,7 +1180,7 @@
     <div class="testi-card">
       <div class="stars">★★★★★</div>
       <div class="testi-quote">"</div>
-      <p class="testi-text">0.5% commission changed everything for me. I was losing 5–8% on every trade on other platforms. BatKing is genuinely different.</p>
+      <p class="testi-text">Switched from DaddyAnna after 2 years. The 15% bonus vs their 5% is real — got ₹3,000 extra on my ₹20,000 deposit. Withdrawals are genuinely under 2 min.</p>
       <div class="testi-author">
         <img src="https://i.pravatar.cc/80?img=12" class="testi-avatar" alt="Priya">
         <div>
@@ -2039,7 +1192,7 @@
     <div class="testi-card">
       <div class="stars">★★★★☆</div>
       <div class="testi-quote">"</div>
-      <p class="testi-text">IPL markets are incredible — so many options beyond just match winner. Session totals, wicket bets, over-by-over. Love it.</p>
+      <p class="testi-text">The daily match predictions are gold. Won ₹42,000 following their RCB vs MI pick last week. Neither Sportistan nor WPLeague give you this kind of analysis.</p>
       <div class="testi-author">
         <img src="https://i.pravatar.cc/80?img=33" class="testi-avatar" alt="Aakash">
         <div>
@@ -2106,150 +1259,9 @@
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="#" class="logo" style="text-decoration:none;">
-        <div class="logo-icon">🏏</div>
-        BatKing
-      </a>
-      <p>India's most trusted peer-to-peer prediction exchange. Lowest commission. Fastest withdrawals. Real-time markets on every sport.</p>
-      <div style="margin-top:20px; font-size:0.72rem; color: var(--muted); line-height:1.8;">
-        ⚠️ Gambling can be addictive. Play responsibly.<br>
-        18+ only. T&Cs apply.
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-title">Sports</div>
-      <ul class="footer-links">
-        <li><a href="#">Cricket</a></li>
-        <li><a href="#">Football</a></li>
-        <li><a href="#">Tennis</a></li>
-        <li><a href="#">Basketball</a></li>
-        <li><a href="#">Horse Racing</a></li>
-        <li><a href="#">Esports</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Products</div>
-      <ul class="footer-links">
-        <li><a href="#">Exchange Betting</a></li>
-        <li><a href="#">Live Casino</a></li>
-        <li><a href="#">Sports Book</a></li>
-        <li><a href="#">Promotions</a></li>
-        <li><a href="#">VIP Club</a></li>
-        <li><a href="#">Affiliate Program</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Company</div>
-      <ul class="footer-links">
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Help Centre</a></li>
-        <li><a href="#">Responsible Gaming</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms & Conditions</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 BatKing Exchange. All rights reserved. Operated under license.</p>
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div class="age-badge">18+ Only</div>
-      <div class="social-links">
-        <a href="#" class="social-btn">𝕏</a>
-        <a href="#" class="social-btn">in</a>
-        <a href="#" class="social-btn">▶</a>
-        <a href="#" class="social-btn">📸</a>
-      </div>
-    </div>
-  </div>
-</footer>
+<div id="footer-mount"></div>
+<div id="betslip-mount"></div>
 
-<!-- FLOATING BET SLIP -->
-<div class="bet-slip">
-  <button class="bet-slip-toggle" onclick="this.querySelector('.bet-count').textContent = Math.min(9, parseInt(this.querySelector('.bet-count').textContent)+1)">
-    🎯 Bet Slip
-    <div class="bet-count">0</div>
-  </button>
-</div>
-
-<script>
-  // Scroll Reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  reveals.forEach(el => observer.observe(el));
-
-  // Live odds randomizer
-  function randomizeOdds() {
-    const oddValues = document.querySelectorAll('.odd-value');
-    oddValues.forEach(el => {
-      if (el.textContent === '—') return;
-      const current = parseFloat(el.textContent);
-      if (isNaN(current)) return;
-      const change = (Math.random() - 0.5) * 0.06;
-      const newVal = Math.max(1.01, current + change).toFixed(2);
-      el.textContent = newVal;
-      el.parentElement.classList.add('flash-green');
-      setTimeout(() => el.parentElement.classList.remove('flash-green'), 600);
-    });
-  }
-
-  setInterval(randomizeOdds, 2200);
-
-  // Odd button click handler
-  document.querySelectorAll('.odd-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const val = this.querySelector('.odd-value').textContent;
-      if (val === '—') return;
-      const label = this.querySelector('.odd-label').textContent;
-      const countEl = document.querySelector('.bet-count');
-      const count = parseInt(countEl.textContent);
-      if (count < 9) countEl.textContent = count + 1;
-      this.style.transform = 'scale(0.95)';
-      setTimeout(() => this.style.transform = '', 150);
-    });
-  });
-
-  // Score update simulation
-  setInterval(() => {
-    const scores = document.querySelectorAll('.team-score');
-    scores.forEach(s => {
-      if (s.textContent.includes('/') && Math.random() > 0.85) {
-        const parts = s.textContent.split('/');
-        const runs = parseInt(parts[0]);
-        s.textContent = (runs + (Math.random() > 0.5 ? 1 : 0)) + '/' + parts[1];
-      }
-    });
-  }, 3000);
-
-  // Hamburger toggle
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobileNav');
-
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileNav.classList.toggle('open');
-    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
-  });
-
-  // Close mobile nav on link click
-  mobileNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      mobileNav.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
