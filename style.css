@@ -411,10 +411,10 @@
   .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1600&q=80');
+    background-image: url('https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1920&q=80');
     background-size: cover;
-    background-position: center 30%;
-    filter: brightness(0.25) saturate(0.6);
+    background-position: center;
+    filter: brightness(0.3) saturate(0.85) contrast(1.05);
   }
 
   .hero-gradient {
@@ -2903,3 +2903,499 @@
     .about-trust-badges { gap: 6px; }
     .trust-badge { font-size: 0.7rem; padding: 6px 12px; }
   }
+
+/* ============================================================
+   COMPREHENSIVE MOBILE RESPONSIVE OVERHAUL
+   ============================================================ */
+
+/* --- Tablet & narrow desktop --- */
+@media (max-width: 1024px) {
+  /* Tighten padding */
+  section { padding: 70px 32px; }
+  nav { padding: 0 24px; }
+  footer { padding: 50px 32px 24px; }
+
+  /* Hero text scales down */
+  .hero-title { font-size: clamp(3rem, 7vw, 5rem) !important; }
+  .hero-content { padding: 110px 32px 60px; max-width: 100%; }
+  .hero-stats { right: 32px; bottom: 40px; gap: 32px; }
+  .hero-stats .stat-num { font-size: 2rem; }
+
+  /* Page hero spacing */
+  .page-hero { padding: 130px 32px 70px; min-height: 380px; }
+
+  /* About section */
+  .about-grid { gap: 40px; }
+  .about-image img { aspect-ratio: 16/9; }
+
+  /* Compare tables become horizontally scrollable */
+  .compare-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-row { min-width: 720px; }
+
+  /* Points tables get scroll */
+  .table-card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .points-table { min-width: 480px; }
+}
+
+/* --- Phones (768px and below) --- */
+@media (max-width: 768px) {
+  /* Nav: smaller logo, padding */
+  nav { padding: 0 14px; height: 64px; }
+  .logo { font-size: 1.3rem; letter-spacing: 2px; gap: 8px; }
+  .logo-icon { width: 32px; height: 32px; font-size: 1rem; }
+  .btn-whatsapp { padding: 7px 12px; font-size: 0.68rem; gap: 5px; }
+  .btn-whatsapp-icon { font-size: 0.95rem; }
+  .nav-right { gap: 8px; }
+  .mobile-nav { top: 64px; padding: 16px; }
+
+  /* Section spacing */
+  section { padding: 48px 16px; }
+  footer { padding: 40px 16px 20px; }
+
+  /* HERO - mobile redo */
+  .hero { min-height: auto; padding-bottom: 0; }
+  .hero-content { padding: 100px 16px 48px; max-width: 100%; }
+  .hero-title { font-size: clamp(2.4rem, 11vw, 3.6rem) !important; line-height: 0.95; letter-spacing: 1px; }
+  .hero-sub { font-size: 0.92rem; line-height: 1.6; margin-bottom: 28px; }
+  .hero-badge { font-size: 0.62rem; padding: 5px 12px; letter-spacing: 1.5px; margin-bottom: 18px; }
+  .hero-ctas { flex-direction: column; gap: 10px; width: 100%; }
+  .btn-hero { width: 100%; padding: 14px 20px; text-align: center; font-size: 0.84rem; }
+  .hero-trust-row { gap: 6px; margin-top: 22px; justify-content: flex-start; }
+  .trust-chip { font-size: 0.62rem; padding: 4px 10px; letter-spacing: 0.3px; }
+
+  /* Hero stats: show as compact grid below content (override the earlier display:none) */
+  .hero-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: static;
+    margin: 32px 16px 0;
+    padding: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .hero-stats .stat-item { text-align: center; padding: 14px 8px; border-right: 1px solid var(--border); }
+  .hero-stats .stat-item:last-child { border-right: none; }
+  .hero-stats .stat-num { font-size: 1.3rem; }
+  .hero-stats .stat-label { font-size: 0.6rem; letter-spacing: 1px; }
+
+  /* Page hero (sub-pages) */
+  .page-hero { padding: 100px 16px 50px; min-height: auto; }
+  .page-hero h1 { font-size: clamp(2rem, 9vw, 3rem) !important; line-height: 1; }
+  .page-hero-sub { font-size: 0.9rem; line-height: 1.6; }
+  .page-hero-ctas { flex-direction: column; gap: 10px; }
+  .page-hero-ctas .btn-hero { width: 100%; }
+  .breadcrumbs { font-size: 0.66rem; gap: 6px; }
+  .hero-stats-strip { grid-template-columns: 1fr 1fr; margin-top: 24px; }
+  .strip-stat { padding: 14px 12px; }
+  .strip-stat-num { font-size: 1.6rem; }
+  .strip-stat-label { font-size: 0.6rem; letter-spacing: 1px; margin-top: 4px; }
+
+  /* Section titles */
+  .section-title { font-size: clamp(1.8rem, 6vw, 2.4rem) !important; letter-spacing: 1.2px; }
+  .section-tag { font-size: 0.6rem; letter-spacing: 2px; gap: 8px; }
+  .section-tag::before { width: 16px; }
+  .section-sub { font-size: 0.84rem; }
+
+  /* Ticker */
+  .ticker { height: 40px; }
+  .ticker-label { font-size: 0.6rem; padding: 0 12px; letter-spacing: 1.2px; }
+  .ticker-item { font-size: 0.72rem; }
+
+  /* Match cards: improve spacing */
+  .match-card-body { padding: 14px; }
+  .match-card-header { padding: 12px 14px 8px; }
+  .team img { width: 38px; height: 38px; }
+  .team-name { font-size: 0.7rem; }
+  .team-score { font-size: 1.2rem; }
+  .vs-text { font-size: 0.66rem; }
+
+  /* Promo strip */
+  .promo-text { font-size: 0.95rem; line-height: 1.4; }
+  .promo-sub { font-size: 0.74rem; }
+  .promo-btn { width: 100%; padding: 12px 22px; font-size: 0.78rem; }
+
+  /* About / popular games */
+  .about-grid { gap: 28px; }
+  .about-content p { font-size: 0.86rem; }
+  .about-lead { font-size: 0.95rem; }
+  .about-image-tag { top: 14px; left: 14px; font-size: 0.66rem; padding: 6px 12px; }
+  .about-trust-badges { gap: 6px; }
+  .trust-badge { font-size: 0.66rem; padding: 6px 11px; }
+  .games-strip { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .game-tile-info { bottom: 12px; left: 12px; right: 12px; }
+  .game-tile-info h4 { font-size: 1rem; }
+
+  /* Trust grid */
+  .trust-grid { grid-template-columns: 1fr; gap: 12px; }
+  .trust-card { padding: 24px 20px; }
+  .trust-icon { font-size: 2rem; }
+  .trust-card h4 { font-size: 1.2rem; }
+  .trust-card p { font-size: 0.82rem; }
+
+  /* Compare table simplification on mobile */
+  .compare-table { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; }
+  .compare-row { grid-template-columns: 140px repeat(4, 90px); min-width: 510px; font-size: 0.7rem; padding: 10px 12px; gap: 4px; }
+  .compare-row.header { font-size: 0.66rem; padding: 12px; }
+  .compare-feature { font-size: 0.74rem; }
+  .compare-cell { padding: 4px 2px; }
+
+  /* Predictions */
+  .prediction-body { padding: 18px; }
+  .prediction-match { font-size: 1.3rem; }
+  .prediction-venue { font-size: 0.72rem; }
+  .prediction-pick { padding: 12px 14px; }
+  .prediction-pick-text { font-size: 0.84rem; }
+  .prediction-analysis { font-size: 0.78rem; }
+  .prediction-stat-num { font-size: 1rem; }
+
+  /* Fantasy */
+  .fantasy-team { padding: 20px 16px; }
+  .fantasy-team-title { font-size: 1.25rem; }
+  .fantasy-player { padding: 8px 10px; font-size: 0.78rem; }
+  .fantasy-captain { padding: 12px; }
+
+  /* Withdrawal proofs grid */
+  .proofs-grid { grid-template-columns: 1fr; gap: 12px; }
+  .proof-card { padding: 18px; }
+  .proof-amount { font-size: 1.8rem; }
+
+  /* Points table */
+  .table-card { overflow-x: auto; }
+  .points-table { font-size: 0.74rem; }
+  .points-table th, .points-table td { padding: 10px 8px; }
+  .table-card-head { padding: 12px 16px; }
+  .table-card-title { font-size: 1.1rem; }
+  .top-scorer { padding: 12px 16px; gap: 10px; }
+  .scorer-rank { width: 22px; height: 22px; font-size: 0.7rem; }
+  .scorer-name { font-size: 0.8rem; }
+  .scorer-team { font-size: 0.62rem; }
+  .scorer-stat { font-size: 1.1rem; }
+
+  /* Fixtures */
+  .fixture-row { grid-template-columns: 80px 1fr; gap: 12px; padding: 12px; }
+  .fixture-date { font-size: 0.95rem; }
+  .fixture-date small { font-size: 0.6rem; }
+  .fixture-match { font-size: 0.84rem; }
+  .fixture-match small { font-size: 0.66rem; }
+  .fixture-venue, .fixture-action { display: none; }
+
+  /* Featured (sport cards) */
+  .featured-image { display: none; }
+  .sport-cards { grid-template-columns: 1fr; }
+  .featured-inner { gap: 0; }
+
+  /* How-it-works */
+  .how-steps { grid-template-columns: 1fr; gap: 1px; }
+  .step { padding: 24px 20px; }
+  .step-num { font-size: 3rem; }
+  .step-title { font-size: 1.2rem; }
+  .step-desc { font-size: 0.78rem; }
+
+  /* Casino: 2 columns is fine, just tighten */
+  .casino-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .casino-name { font-size: 0.74rem; }
+  .casino-meta { font-size: 0.6rem; }
+
+  /* Testimonials */
+  .testi-card { padding: 20px; }
+  .testi-text { font-size: 0.8rem; }
+  .testi-quote { font-size: 2.2rem; }
+
+  /* App download */
+  .app-inner { grid-template-columns: 1fr; gap: 36px; }
+  .app-mockup img { width: 220px; }
+  .download-btns { justify-content: center; }
+  .feature-list { gap: 10px; }
+  .feature-item { font-size: 0.78rem; }
+
+  /* Payments */
+  .payments-row { gap: 10px; }
+  .payment-item { font-size: 0.7rem; padding: 8px 14px; }
+
+  /* Live blog */
+  .blog-feed { padding: 18px; max-height: 420px; }
+  .blog-entry { gap: 12px; padding: 12px 0; }
+  .blog-time { min-width: 44px; font-size: 0.82rem; }
+  .blog-event { font-size: 0.78rem; }
+  .blog-widget { padding: 18px; }
+  .mini-score-row { font-size: 0.76rem; padding: 7px 0; }
+
+  /* ID cards (exchange hub) */
+  .id-grid { grid-template-columns: 1fr; gap: 14px; }
+  .id-card { padding: 22px 20px; }
+  .id-logo { width: 50px; height: 50px; font-size: 1.5rem; }
+  .id-title { font-size: 1.4rem; }
+  .id-tagline { font-size: 0.74rem; }
+  .id-features li { font-size: 0.76rem; padding: 6px 0; }
+
+  /* Bonus hero */
+  .bonus-hero-grid { gap: 14px; }
+  .bonus-big { padding: 24px 20px; }
+  .bonus-big h3 { font-size: 1.6rem; }
+  .bonus-big p { font-size: 0.84rem; }
+  .bonus-tag { font-size: 0.6rem; }
+
+  /* FAQ */
+  .faq-q { font-size: 0.84rem; padding: 14px 18px; }
+  .faq-a { font-size: 0.8rem; }
+  .faq-item.open .faq-a { padding: 0 18px 16px; }
+
+  /* Guide cards */
+  .guide-grid { grid-template-columns: 1fr; gap: 12px; }
+  .guide-card { padding: 22px 20px; }
+  .guide-num { font-size: 2.4rem; }
+  .guide-card h4 { font-size: 1.2rem; }
+  .guide-card p { font-size: 0.78rem; }
+
+  /* Referral banner */
+  .referral-banner { margin: 32px 16px; padding: 24px 20px; flex-direction: column; text-align: center; gap: 18px; }
+  .referral-banner h3 { font-size: 1.4rem; line-height: 1.2; }
+  .referral-banner p { font-size: 0.8rem; }
+  .referral-banner .btn-whatsapp { width: 100%; justify-content: center; padding: 12px 20px; font-size: 0.84rem; }
+
+  /* Legal section */
+  .legal-section { padding: 36px 16px; }
+  .legal-wrap { padding: 22px 18px; gap: 14px; flex-direction: column; }
+  .legal-icon { font-size: 1.8rem; }
+  .legal-body h3 { font-size: 1.2rem; }
+  .legal-body p { font-size: 0.8rem; }
+
+  /* Floating WhatsApp: smaller, hide label, just icon bubble */
+  .float-whatsapp { padding: 12px; bottom: 18px; right: 18px; gap: 0; border-radius: 50%; }
+  .float-whatsapp svg { width: 24px; height: 24px; }
+  .float-whatsapp-label { display: none; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; margin-bottom: 30px; }
+  .footer-brand p { font-size: 0.76rem; max-width: 100%; }
+  .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+  .footer-bottom-right { flex-direction: column; gap: 10px; }
+}
+
+/* --- Tiny phones (480px and below) --- */
+@media (max-width: 480px) {
+  nav { padding: 0 12px; }
+  section { padding: 40px 14px; }
+  footer { padding: 32px 14px 18px; }
+
+  /* Hero further compression */
+  .hero-content { padding: 88px 14px 40px; }
+  .hero-title { font-size: 2.2rem !important; }
+  .hero-sub { font-size: 0.86rem; }
+  .hero-stats { margin: 28px 14px 0; }
+  .hero-stats .stat-num { font-size: 1.15rem; }
+  .hero-stats .stat-label { font-size: 0.55rem; }
+
+  /* Page hero */
+  .page-hero { padding: 88px 14px 40px; }
+  .page-hero h1 { font-size: 1.9rem !important; }
+  .hero-stats-strip { grid-template-columns: 1fr 1fr; gap: 0; }
+  .strip-stat-num { font-size: 1.4rem; }
+
+  /* Section titles */
+  .section-title { font-size: 1.7rem !important; }
+
+  /* Logo even smaller */
+  .logo { font-size: 1.15rem; letter-spacing: 1.5px; }
+  .logo-icon { width: 28px; height: 28px; font-size: 0.9rem; }
+
+  /* Featured-image-label hide */
+  .featured-image-label { display: none; }
+
+  /* Casino single column on tiny */
+  .casino-grid { grid-template-columns: 1fr; gap: 10px; }
+
+  /* Games strip single col on tiny */
+  .games-strip { grid-template-columns: 1fr; }
+
+  /* Payments stack vertically */
+  .payments-row { flex-direction: column; align-items: stretch; gap: 8px; }
+  .payment-item { width: 100%; text-align: center; }
+
+  /* Trust badges full width */
+  .about-trust-badges { flex-direction: column; align-items: stretch; }
+  .trust-badge { text-align: center; }
+
+  /* Compare table further: scroll required, narrower cells */
+  .compare-row { grid-template-columns: 110px repeat(4, 75px); min-width: 410px; font-size: 0.64rem; gap: 2px; padding: 8px; }
+  .compare-feature { font-size: 0.66rem; }
+}
+
+/* --- Landscape phones --- */
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero-content { padding-top: 84px; padding-bottom: 40px; }
+  .page-hero { padding-top: 84px; padding-bottom: 40px; min-height: auto; }
+}
+
+/* --- Prevent horizontal scroll across the site --- */
+html, body { overflow-x: hidden; max-width: 100vw; }
+
+/* --- Image containment --- */
+img { max-width: 100%; height: auto; }
+
+/* --- Touch-friendly tap targets --- */
+@media (max-width: 768px) {
+  a, button, .odd-btn, .id-cta, .fixture-action {
+    min-height: 40px;
+  }
+  .dropdown a, .mobile-subnav a, .footer-links a {
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ============================================================
+   HERO MOBILE FIX — kills overlap of stats card on CTAs,
+   tightens CTA buttons, removes ticker collision
+   ============================================================ */
+@media (max-width: 1024px) {
+  /* Force hero-stats out of absolute positioning at every breakpoint below desktop */
+  .hero-stats {
+    position: static !important;
+    top: auto !important; right: auto !important; bottom: auto !important; left: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0 !important;
+    margin: 28px 24px 0 !important;
+    padding: 0 !important;
+    background: rgba(13,13,18,0.92) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    width: auto !important;
+    text-align: center !important;
+  }
+  .hero-stats .stat-item {
+    text-align: center !important;
+    padding: 16px 6px !important;
+    border-right: 1px solid var(--border);
+  }
+  .hero-stats .stat-item:last-child { border-right: none; }
+  .hero-stats .stat-num { font-size: 1.5rem !important; }
+  .hero-stats .stat-label { font-size: 0.62rem !important; letter-spacing: 1.2px !important; margin-top: 4px !important; }
+
+  /* Hero is now flow-layout, no longer absolute with stats inside */
+  .hero {
+    min-height: auto !important;
+    padding-bottom: 32px;
+  }
+  .hero-content {
+    padding: 110px 24px 24px !important;
+    max-width: 100% !important;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-bg {
+    filter: brightness(0.2) saturate(0.7) !important;
+  }
+  .hero-glow { display: none; }
+}
+
+@media (max-width: 768px) {
+  /* HERO TYPOGRAPHY — tighten so it fits properly */
+  .hero-title {
+    font-size: clamp(2rem, 9vw, 2.8rem) !important;
+    line-height: 1 !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 14px !important;
+  }
+  .hero-sub {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 22px !important;
+    max-width: 100% !important;
+  }
+  .hero-badge {
+    font-size: 0.6rem !important;
+    padding: 5px 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* HERO CTAs — full width, single line, smaller font */
+  .hero-ctas {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 9px !important;
+    width: 100% !important;
+  }
+  .btn-hero {
+    width: 100% !important;
+    padding: 13px 14px !important;
+    font-size: 0.74rem !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Trust chips compact */
+  .hero-trust-row {
+    margin-top: 18px !important;
+    gap: 6px !important;
+  }
+  .trust-chip {
+    font-size: 0.6rem !important;
+    padding: 4px 9px !important;
+    letter-spacing: 0.2px !important;
+  }
+
+  /* Hero stats — 3-col compact grid below CTAs */
+  .hero-stats { margin: 22px 16px 0 !important; }
+  .hero-stats .stat-num { font-size: 1.2rem !important; }
+  .hero-stats .stat-item { padding: 12px 4px !important; }
+  .hero-stats .stat-label { font-size: 0.55rem !important; }
+
+  /* TICKER FIX — label sits properly, no text collision */
+  .ticker {
+    height: 38px !important;
+    position: relative !important;
+  }
+  .ticker-label {
+    position: relative !important;
+    z-index: 5 !important;
+    background: var(--gold) !important;
+    box-shadow: 6px 0 14px rgba(13,13,18,0.85) !important;
+    padding: 0 12px !important;
+    font-size: 0.58rem !important;
+    letter-spacing: 1.2px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
+  .ticker-track {
+    padding-left: 24px !important;
+    gap: 36px !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  .ticker-item {
+    font-size: 0.7rem !important;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content { padding: 100px 16px 20px !important; }
+  .hero-title { font-size: 1.85rem !important; letter-spacing: 0.3px !important; }
+  .hero-sub { font-size: 0.82rem !important; }
+  .hero-ctas { gap: 8px !important; }
+  .btn-hero { font-size: 0.7rem !important; padding: 12px 12px !important; }
+  .hero-stats { margin: 20px 14px 0 !important; }
+  .hero-stats .stat-num { font-size: 1.05rem !important; }
+  .hero-stats .stat-label { font-size: 0.5rem !important; }
+  .ticker-label { padding: 0 10px !important; font-size: 0.54rem !important; }
+  .ticker-item { font-size: 0.66rem !important; }
+}
+
+/* CTA text variants */
+.cta-full { display: inline; }
+.cta-short { display: none; }
+@media (max-width: 768px) {
+  .cta-full { display: none; }
+  .cta-short { display: inline; }
+}

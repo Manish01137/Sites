@@ -48,10 +48,6 @@ const NAV_HTML = `
   </ul>
 
   <div class="nav-right">
-    <a href="https://wa.me/" class="btn-whatsapp" target="_blank" rel="noopener">
-      <span class="btn-whatsapp-icon">🟢</span>
-      GET CRICKET ID
-    </a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
